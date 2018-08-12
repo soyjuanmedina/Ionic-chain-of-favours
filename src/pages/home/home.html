@@ -1,14 +1,33 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            Favor app
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+    <ion-list>
+        <ion-item>
+            <ion-label>Escoge el idioma</ion-label>
+            <ion-select (ionChange)="setLanguage($event)">
+                <ion-option *ngFor="let item of idioms" [value]="item.value">
+                    {{ item.label }}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-list>
+    <ion-row>
+        <ion-col style="text-align: right">
+            <button class="round-button" (click)="goToPage('AskingPage')">{{ 'ASK_FAVOR' | translate }}</button>
+        </ion-col>
+        <ion-col>
+            <button class="round-button" (click)="goToPage('GivingPage')">{{ 'DO_FAVOR' | translate }}</button>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col width-100 style="text-align: center">
+            <button ion-button round outline>{{ 'LOGIN' | translate }}</button>
+        </ion-col>
+    </ion-row>
 </ion-content>

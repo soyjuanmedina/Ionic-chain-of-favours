@@ -1,3 +1,13 @@
 page-home {
-
+    .round-button {
+        height: 80px;
+        background-color: color($colors, secondary, base);
+        color: white;
+        margin: 5px;
+        padding: 10px;
+        -webkit-border-radius: 150px;
+        -moz-border-radius: 150px;
+        border-radius: 150px;
+        line-height: 32px;
+    }
 }
