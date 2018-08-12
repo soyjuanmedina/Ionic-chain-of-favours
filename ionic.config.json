@@ -1,0 +1,8 @@
+{
+  "name": "favores",
+  "app_id": "a30ed496",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
