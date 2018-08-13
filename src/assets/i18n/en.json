@@ -4,6 +4,10 @@
   "CHOOSE_LANGUAGE": "Choose the language",
   "DO_FAVOR": "Do a favour",
   "ENGLISH": "English",
+  "ENTER_TO_APP": "Enter into Chain of favours",
   "LOGIN": "Login",
-  "SPANISH": "Spanish"
+  "SPANISH": "Spanish",
+  "EMAIL": "Email",
+  "PASSWORD": "Password",
+  "CREATE_ACCOUNT": "Create account"
 }

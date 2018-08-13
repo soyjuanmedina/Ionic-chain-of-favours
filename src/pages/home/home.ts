@@ -1,12 +1,18 @@
 import { importExpr } from '@angular/compiler/src/output/output_ast';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
+
+import { AuthProvider } from '../../providers/auth/auth';
 
 //Pages
 import { AskingPage } from '../asking/asking';
 import { GivingPage } from '../giving/giving';
+import { LoginPage } from '../login/login';
+
+
+@IonicPage() 
 
 @Component({
   selector: 'page-home',
@@ -14,20 +20,11 @@ import { GivingPage } from '../giving/giving';
 })
 export class HomePage {
 
-  idioms: any[] = [];
 
   constructor(public navCtrl: NavController,
+    public auth: AuthProvider,
     public translateService: TranslateService) {
-    this.idioms = [
-      {
-        value: 'es',
-        label: 'SPANISH'
-      },
-      {
-        value: 'en',
-        label: 'ENGLISH'
-      }
-    ];
+    
   }
 
   setLanguage(lang) {
@@ -36,6 +33,10 @@ export class HomePage {
 
   goToPage(page){
     this.navCtrl.push(page);
+  }
+
+  closeSesion(){
+    this.auth.logout();
   }
 
 }

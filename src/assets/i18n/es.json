@@ -4,6 +4,10 @@
   "CHOOSE_LANGUAGE": "Escoge el idioma",
   "DO_FAVOR": "Hacer un favor",
   "ENGLISH": "Inglés",
+  "ENTER_TO_APP": "Entrar en Cadena de favores",
   "LOGIN": "Login",
-  "SPANISH": "Español"
+  "SPANISH": "Español",
+  "EMAIL": "Email",
+  "PASSWORD": "Contraseña",
+  "CREATE_ACCOUNT": "Crear cuenta"
 }
