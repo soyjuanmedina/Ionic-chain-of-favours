@@ -1,5 +1,9 @@
 {
-    "ASK_FAVOR": "Ask a favor",
-    "DO_FAVOR": "Do a favor",
-    "LOGIN": "Login"
+  "APP_TITLE": "Chain of favours",
+  "ASK_FAVOR": "Ask a favour",
+  "CHOOSE_LANGUAGE": "Choose the language",
+  "DO_FAVOR": "Do a favour",
+  "ENGLISH": "English",
+  "LOGIN": "Login",
+  "SPANISH": "Spanish"
 }

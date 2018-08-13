@@ -21,11 +21,11 @@ export class HomePage {
     this.idioms = [
       {
         value: 'es',
-        label: 'Español'
+        label: 'SPANISH'
       },
       {
         value: 'en',
-        label: 'Ingles'
+        label: 'ENGLISH'
       }
     ];
   }

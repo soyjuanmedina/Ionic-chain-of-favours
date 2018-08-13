@@ -1,5 +1,9 @@
 {
-    "ASK_FAVOR": "Pedir un favor",
-    "DO_FAVOR": "Hacer un favor",
-    "LOGIN": "Login"
+  "APP_TITLE": "Cadena de favores",
+  "ASK_FAVOR": "Pedir un favor",
+  "CHOOSE_LANGUAGE": "Escoge el idioma",
+  "DO_FAVOR": "Hacer un favor",
+  "ENGLISH": "Inglés",
+  "LOGIN": "Login",
+  "SPANISH": "Español"
 }

@@ -1,18 +1,17 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            Favor app
+          {{ 'APP_TITLE' | translate }}
         </ion-title>
     </ion-navbar>
 </ion-header>
-
 <ion-content padding>
     <ion-list>
         <ion-item>
-            <ion-label>Escoge el idioma</ion-label>
+            <ion-label>{{ 'CHOOSE_LANGUAGE' | translate }}</ion-label>
             <ion-select (ionChange)="setLanguage($event)">
                 <ion-option *ngFor="let item of idioms" [value]="item.value">
-                    {{ item.label }}
+                    {{ item.label  | translate }}
                 </ion-option>
             </ion-select>
         </ion-item>
