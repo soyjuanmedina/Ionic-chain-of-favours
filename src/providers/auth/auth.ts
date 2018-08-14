@@ -39,5 +39,9 @@ export class AuthProvider {
     console.log('obteniendo sesion');
     return this.afAuth.authState;
   }
+  
+  getUser() {
+    return this.afAuth.auth.currentUser.uid;
+  }
 
 }

@@ -6,18 +6,18 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <button ion-button block (click)="closeSesion()">Cerrar Sesión</button>
-    <ion-row>
-        <ion-col style="text-align: right">
-            <a ion-button round (click)="goToPage('AskingPage')">{{ 'ASK_FAVOR' | translate }}</a>
-        </ion-col>
-        <ion-col>
-            <a ion-button round (click)="goToPage('GivingPage')">{{ 'DO_FAVOR' | translate }}</a>
-        </ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col width-100 style="text-align: center">
-            <a ion-button round outline  (click)="goToPage('GivingPage')">{{ 'LOGIN' | translate }}</a>
-        </ion-col>
-    </ion-row>
+  <div id="map"></div>
+  <ion-row>
+    <ion-col style="text-align: right">
+      <a ion-button round class="round-button" (click)="goToPage('AskingPage')">{{ 'ASK_FAVOR' | translate }}</a>
+    </ion-col>
+    <ion-col>
+      <a ion-button round class="round-button" (click)="goToPage('GivingPage')">{{ 'DO_FAVOR' | translate }}</a>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <button ion-button block (click)="closeSesion()">Cerrar Sesión</button>
+    </ion-col>
+  </ion-row>
 </ion-content>
