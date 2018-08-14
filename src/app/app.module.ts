@@ -18,8 +18,6 @@ import { MyApp } from './app.component';
 import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { LoginPageModule } from '../pages/login/login.module';
-import { HomePageModule } from '../pages/home/home.module';
 import { FirebaseDbProvider } from '../providers/firebase-db/firebase-db';
 
 export const firebaseConfig = {
@@ -38,12 +36,12 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     MyApp,
+    LoginPage,
+    HomePage,
   ],
   imports: [
     BrowserModule,
     HttpClientModule, 
-    LoginPageModule, 
-    HomePageModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
@@ -68,7 +66,7 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     FirebaseDbProvider,
-    Geolocation,
+    Geolocation
   ]
 })
 export class AppModule {}

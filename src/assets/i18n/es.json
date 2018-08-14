@@ -9,5 +9,6 @@
   "SPANISH": "Español",
   "EMAIL": "Email",
   "PASSWORD": "Contraseña",
-  "CREATE_ACCOUNT": "Crear cuenta"
+  "CREATE_ACCOUNT": "Crear cuenta",
+  "CLOSE_SESSION": "Cerrar sesión"
 }

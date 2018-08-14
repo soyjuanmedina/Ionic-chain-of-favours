@@ -1,6 +1,6 @@
 import { importExpr } from '@angular/compiler/src/output/output_ast';
 import { Component } from '@angular/core';
-import { NavController, IonicPage } from 'ionic-angular';
+import { NavController, IonicPage, NavParams } from 'ionic-angular';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -12,12 +12,8 @@ import { Platform } from 'ionic-angular';
 //Pages
 import { AskingPage } from '../asking/asking';
 import { GivingPage } from '../giving/giving';
-import { LoginPage } from '../login/login';
 
 declare var google: any;
-
-
-@IonicPage() 
 
 @Component({
   selector: 'page-home',
@@ -46,7 +42,7 @@ export class HomePage {
   }
 
   goToPage(page){
-    this.navCtrl.push(page);
+    this.navCtrl.push(page, this.coords);
   }
 
   closeSesion(){
@@ -72,6 +68,11 @@ export class HomePage {
     this.map = new google.maps.Map(mapContainer, {
       center: this.coords,
       zoom: 12
+    });
+    let miMarker = new google.maps.Marker({
+      icon: 'assets/imgs/location-mark.png',
+      map: this.map,
+      position: this.coords
     });
   }
 

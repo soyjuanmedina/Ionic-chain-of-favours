@@ -26,10 +26,10 @@ export class MyApp {
     platform.ready().then(() => {
       this.auth.Session.subscribe(session => {
         if (session) {
-          this.rootPage = 'HomePage';
+          this.rootPage = HomePage;
         }
         else {
-          this.rootPage = 'LoginPage';
+          this.rootPage = LoginPage;
         }
       });
       // Okay, so the platform is ready and our plugins are available.
