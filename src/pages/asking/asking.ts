@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 declare var google: any; 
 
 /**
@@ -19,10 +20,23 @@ export class AskingPage {
   coords: any = { lat: 0, lng: 0 };
   address: string;
   place: string;
-  title: string;
-  description: string = '';
+  private todo : FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private formBuilder: FormBuilder) {
+    this.todo = this.formBuilder.group({
+      title: ['', Validators.required],
+      description: [''],
+      expiration: false,
+      expirationDate: [''],
+      expirationHour: [''],
+      tip: false,
+      tipAmount: [''],
+      goToSomewhere: false,
+      placeToGo: [''],
+    });
+
   }
 
   getAddress(coords): any {
@@ -39,8 +53,12 @@ export class AskingPage {
     });
   }
 
+  setCurrentPosition(){
+    this.todo.placeToGo = this.address;
+  }
+
   askAFavour(){
-    console.log('pidiendo favor');
+    console.log(this.todo.value);
   }
 
   ionViewDidLoad() {

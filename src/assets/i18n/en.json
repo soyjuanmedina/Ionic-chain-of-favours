@@ -1,14 +1,14 @@
 {
-  "APP_TITLE": "Chain of favours",
-  "ASK_FAVOR": "Ask a favour",
-  "CHOOSE_LANGUAGE": "Choose the language",
-  "DO_FAVOR": "Do a favour",
-  "ENGLISH": "English",
-  "ENTER_TO_APP": "Enter into Chain of favours",
-  "LOGIN": "Login",
-  "SPANISH": "Spanish",
-  "EMAIL": "Email",
-  "PASSWORD": "Password",
-  "CREATE_ACCOUNT": "Create account",
-  "CLOSE_SESSION": "Close session"
+    "APP_TITLE": "Favours chain",
+    "ASK_FAVOR": "Ask a favour",
+    "CHOOSE_LANGUAGE": "Choose the language",
+    "DO_FAVOR": "Do a favour",
+    "ENGLISH": "English",
+    "ENTER_TO_APP": "Enter into Chain of favours",
+    "LOGIN": "Login",
+    "SPANISH": "Spanish",
+    "EMAIL": "Email",
+    "PASSWORD": "Password",
+    "CREATE_ACCOUNT": "Create account",
+    "CLOSE_SESSION": "Close session"
 }

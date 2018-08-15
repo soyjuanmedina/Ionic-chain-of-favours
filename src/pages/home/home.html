@@ -1,23 +1,23 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-          {{ 'APP_TITLE' | translate }}
+            {{ 'APP_TITLE' | translate }}
         </ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <div id="map"></div>
-  <ion-row>
-    <ion-col col-6>
-      <a ion-button round class="round-button" (click)="goToPage('AskingPage')">{{ 'ASK_FAVOR' | translate }}</a>
-    </ion-col>
-    <ion-col col-6>
-      <a ion-button round class="round-button" (click)="goToPage('GivingPage')">{{ 'DO_FAVOR' | translate }}</a>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <button ion-button block (click)="closeSesion()">{{ 'CLOSE_SESSION' | translate }}</button>
-    </ion-col>
-  </ion-row>
+    <div id="map"></div>
+    <ion-row>
+        <ion-col col-6>
+            <a ion-button round class="round-button" (click)="goToPage('AskingPage')">{{ 'ASK_FAVOR' | translate }}</a>
+        </ion-col>
+        <ion-col col-6>
+            <a ion-button round class="round-button" (click)="goToPage('GivingPage')">{{ 'DO_FAVOR' | translate }}</a>
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+            <button ion-button block (click)="closeSesion()">{{ 'CLOSE_SESSION' | translate }}</button>
+        </ion-col>
+    </ion-row>
 </ion-content>

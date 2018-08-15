@@ -1,31 +1,78 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      <!-- {{ 'ASK_FAVOR' | translate }} -->
-       'ASK_FAVOR'
-    </ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>
+            <!-- {{ 'ASK_FAVOR' | translate }} -->
+            'ASK_FAVOR'
+        </ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <ion-card>
-    <ion-card-header>
-      Asking a favour in
-    </ion-card-header>
-    <ion-card-content>
-      <h1>
-        {{ place }}
-      </h1>
-      <hr/>
-      <form (ngSubmit)="askAFavour()">
-        <ion-item>
-          <ion-textarea placeholder="Favour title"></ion-textarea>
-        </ion-item>
-        <ion-item>
-          <ion-textarea placeholder="Favour description" style="height: 200px;"></ion-textarea>
-        </ion-item>
-        <button ion-button type="submit" block>'ASK_FAVOR'</button>
-      </form>
-    </ion-card-content>
-  </ion-card>
+    <ion-card>
+        <ion-card-header>
+            Asking a favour in
+        </ion-card-header>
+        <ion-card-content>
+            <h1>
+                {{ place }}
+            </h1>
+
+            <hr/>
+            <form [formGroup]="todo" (ngSubmit)="askAFavour()">
+                <ion-item>
+                    <ion-label floating>Title</ion-label>
+                    <ion-input type="text" formControlName="title"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>Description</ion-label>
+                    <ion-textarea formControlName="description" style="height: 200px;"></ion-textarea>
+                </ion-item>
+                <ion-item>
+                    <ion-label>The favour has deadline</ion-label>
+                    <ion-toggle formControlName="expiration"></ion-toggle>
+                </ion-item>
+                <ion-list *ngIf="todo.value.expiration">
+                    <ion-item>
+                        <ion-label floating>Start Date</ion-label>
+                        <ion-datetime displayFormat="DD MM YYYY" formControlName="expirationDate"></ion-datetime>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>Start Time</ion-label>
+                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" formControlName="expirationHour"></ion-datetime>
+                    </ion-item>
+                </ion-list>
+                <ion-item>
+                    <ion-label>Do you want offer a tip?</ion-label>
+                    <ion-toggle formControlName="tip"></ion-toggle>
+                </ion-item>
+                <ion-item *ngIf="todo.value.tip">
+                    <ion-label>Tip amount: {{todo.value.tipAmount}} €</ion-label>
+                    <ion-range min="1" max="10" pin="true" formControlName="tipAmount">
+                        <ion-label range-left>1 €</ion-label>
+                        <ion-label range-right>10 €</ion-label>
+                    </ion-range>
+                </ion-item>
+
+
+                <ion-item>
+                    <ion-label>The helper needs to go somewhere</ion-label>
+                    <ion-toggle formControlName="goToSomewhere"></ion-toggle>
+                </ion-item>
+
+                <div>
+                    <ion-item>
+                        <ion-label floating>Place to go</ion-label>
+                        <ion-input type="text" [(ngModel)]="todo.placeToGo" formControlName="placeToGo"></ion-input>
+                    </ion-item>
+
+                    <button ion-button small (click)="setCurrentPosition()">Set to my current position</button>
+                </div>
+
+
+
+
+                <button ion-button type="submit" [disabled]="!todo.valid">Submit</button>
+            </form>
+        </ion-card-content>
+    </ion-card>
 </ion-content>
