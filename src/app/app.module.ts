@@ -10,7 +10,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { MyApp } from './app.component';
@@ -19,6 +19,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { FirebaseDbProvider } from '../providers/firebase-db/firebase-db';
+import { DatabaseProvider } from '../providers/database/database';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyDCq-ijTJjzSG639LBOFdDF3bxXXYJ4h3k",
@@ -44,7 +45,7 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule, 
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
+    AngularFirestoreModule,
     AngularFireAuthModule,
     TranslateModule.forRoot({
       loader: {
@@ -66,6 +67,7 @@ export function createTranslateLoader(http: HttpClient) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
     FirebaseDbProvider,
+    DatabaseProvider,
     Geolocation
   ]
 })

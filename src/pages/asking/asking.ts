@@ -6,6 +6,8 @@ declare var google: any;
 import { Geolocation } from '@ionic-native/geolocation';
 import { Platform } from 'ionic-angular';
 
+import { DatabaseProvider } from '../../providers/database/database';
+
 /**
  * Generated class for the AskingPage page.
  *
@@ -23,7 +25,7 @@ export class AskingPage {
   coords: any = { lat: 0, lng: 0 };
   address: string;
   place: string;
-  private todo : any;
+  todo : any;
 
   map: any;
 
@@ -31,7 +33,8 @@ export class AskingPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private formBuilder: FormBuilder,
     public platform: Platform,
-    private geolocation: Geolocation) {
+    private geolocation: Geolocation,
+    private _DB: DatabaseProvider,) {
 
     this.todo = this.formBuilder.group({
       title: ['', Validators.required],
@@ -65,8 +68,25 @@ export class AskingPage {
   }
 
   askAFavour(){
-    console.log('pidiendo favor');
+    let favourID = 'cuaenta';
+
+         this._DB.addDocument('favours',
+                               {
+	                               city    		 : 'city',
+	                               population    : 'population',
+	                               established   : 'established'
+	                           })
+         .then((data) =>
+         {
+            console.log('bien');
+         })
+         .catch((error) =>
+         {
+          console.log(error);
+         });
+      
   }
+  
 
   getLocation(): any {
     this.geolocation.getCurrentPosition().then(res => {
@@ -107,7 +127,6 @@ export class AskingPage {
   ionViewDidLoad() {
 
   }
-
   
 
 }
