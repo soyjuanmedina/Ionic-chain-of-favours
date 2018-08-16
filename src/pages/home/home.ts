@@ -6,9 +6,6 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { AuthProvider } from '../../providers/auth/auth';
 
-import { Geolocation } from '@ionic-native/geolocation';
-import { Platform } from 'ionic-angular';
-
 //Pages
 import { AskingPage } from '../asking/asking';
 import { GivingPage } from '../giving/giving';
@@ -26,14 +23,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
     public auth: AuthProvider,
-    public translateService: TranslateService,
-    public platform: Platform,
-    private geolocation: Geolocation) {
-
-    platform.ready().then(() => {
-      // La plataforma esta lista y ya tenemos acceso a los plugins.
-      this.getLocation();
-    });
+    public translateService: TranslateService) {
     
   }
 
@@ -47,33 +37,6 @@ export class HomePage {
 
   closeSesion(){
     this.auth.logout();
-  }
-
-  getLocation(): any {
-    this.geolocation.getCurrentPosition().then(res => {
-      this.coords.lat = res.coords.latitude;
-      this.coords.lng = res.coords.longitude;
-
-      this.loadMap();
-    })
-      .catch(
-        (error) => {
-          console.log(error);
-        }
-      );
-  }
-
-  loadMap() {
-    let mapContainer = document.getElementById('map');
-    this.map = new google.maps.Map(mapContainer, {
-      center: this.coords,
-      zoom: 12
-    });
-    let miMarker = new google.maps.Marker({
-      icon: 'assets/imgs/location-mark.png',
-      map: this.map,
-      position: this.coords
-    });
   }
 
 }

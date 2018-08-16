@@ -55,17 +55,19 @@
 
 
                 <ion-item>
-                    <ion-label>The helper needs to go somewhere</ion-label>
+                    <ion-label>Needs to go somewhere?</ion-label>
                     <ion-toggle formControlName="goToSomewhere"></ion-toggle>
                 </ion-item>
 
-                <div>
+                <div [hidden]="!todo.value.goToSomewhere">
                     <ion-item>
                         <ion-label floating>Place to go</ion-label>
                         <ion-input type="text" [(ngModel)]="todo.placeToGo" formControlName="placeToGo"></ion-input>
                     </ion-item>
 
                     <button ion-button small (click)="setCurrentPosition()">Set to my current position</button>
+
+                    <div id="map"></div>
                 </div>
 
 
