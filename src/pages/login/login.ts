@@ -60,7 +60,7 @@ export class LoginPage {
 
   login() {
     this.auth.loginUser(this.user.email, this.user.password).then((user) => {
-      this.navCtrl.push(HomePage);
+      this.navCtrl.setRoot(HomePage);
     })
       .catch(err => {
         let alert = this.alertCtrl.create({

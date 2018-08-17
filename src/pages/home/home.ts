@@ -9,6 +9,7 @@ import { AuthProvider } from '../../providers/auth/auth';
 //Pages
 import { AskingPage } from '../asking/asking';
 import { GivingPage } from '../giving/giving';
+import { LoginPage } from '../login/login';
 
 declare var google: any;
 
@@ -37,6 +38,7 @@ export class HomePage {
 
   closeSesion(){
     this.auth.logout();
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

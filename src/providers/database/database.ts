@@ -206,4 +206,40 @@ export class DatabaseProvider {
       });
    }
 
+  getDocument(collectionObj: string,
+    docID: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this._DB
+        .collection(collectionObj)
+        .doc(docID)
+        .get()
+        .then((obj: any) => {
+          resolve(obj);
+        })
+        .catch((error: any) => {
+          reject(error);
+        });
+    });
+  }
+
+  getDocumentByQuery(collectionObj: string,
+    param: string, value: string): Promise<any> {
+    let result = [];
+    return new Promise((resolve, reject) => {
+      this._DB
+        .collection(collectionObj)
+        .where(param, "==", value)
+        .get().then(function (doc) {
+          doc.forEach(function(doc) {
+            resolve(doc.data());
+        });
+        }).catch(function (error) {
+          console.log("Error getting document:", error);
+        });
+    });
+  }
+
+
+
+
 }

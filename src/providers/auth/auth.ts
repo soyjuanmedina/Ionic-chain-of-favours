@@ -27,8 +27,6 @@ export class AuthProvider {
             email
           })
           .then((data) => {
-            window.localStorage.setItem("UserID", data.id);
-            window.localStorage.setItem("email", email);
           })
           .catch((error) => {
             console.log(error);
@@ -41,7 +39,16 @@ export class AuthProvider {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then(user => {
         Promise.resolve(this.user = user);
-        window.localStorage.setItem("userUid", this.user.user.uid);
+        window.localStorage.setItem("email", email);
+        this._DB.getDocumentByQuery('users', 'email', email)
+          .then((data) => {
+            for (var key in data) {
+              window.localStorage.setItem(key, data[key]);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch(err => Promise.reject(err))
   }

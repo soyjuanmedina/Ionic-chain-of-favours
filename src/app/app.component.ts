@@ -24,15 +24,14 @@ export class MyApp {
     this.translateService.setDefaultLang('en');
     this.translateService.use('en'); 
     platform.ready().then(() => {
-      this.auth.Session.subscribe(session => {
-        if (session) {
-          console.log(localStorage);
+      console.log(localStorage);
+      if (localStorage.email)
+       {
           this.rootPage = HomePage;
         }
         else {
           this.rootPage = LoginPage;
         }
-      });
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
