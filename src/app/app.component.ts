@@ -26,6 +26,7 @@ export class MyApp {
     platform.ready().then(() => {
       this.auth.Session.subscribe(session => {
         if (session) {
+          console.log(localStorage);
           this.rootPage = HomePage;
         }
         else {

@@ -40,7 +40,6 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
   }
 
   signin() {
@@ -61,10 +60,8 @@ export class LoginPage {
 
   login() {
     this.auth.loginUser(this.user.email, this.user.password).then((user) => {
-      console.log(user);
       this.navCtrl.push(HomePage);
-    }
-    )
+    })
       .catch(err => {
         let alert = this.alertCtrl.create({
           title: 'Error',

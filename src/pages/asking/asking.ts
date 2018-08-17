@@ -68,22 +68,30 @@ export class AskingPage {
   }
 
   askAFavour(){
-    let favourID = 'cuaenta';
+    console.log(this.todo.value);
 
-         this._DB.addDocument('favours',
-                               {
-	                               city    		 : 'city',
-	                               population    : 'population',
-	                               established   : 'established'
-	                           })
-         .then((data) =>
-         {
-            console.log('bien');
-         })
-         .catch((error) =>
-         {
-          console.log(error);
-         });
+    let placeToGo = (typeof this.todo.value.placeToGo === 'undefined') ? '' : this.todo.value.placeToGo;
+
+    this._DB.addDocument('favours',
+                          {
+                            title: this.todo.value.title,
+                            description: this.todo.value.description,
+                            expiration: this.todo.value.expiration,
+                            expirationDate: this.todo.value.expirationDate,
+                            expirationHour: this.todo.value.expirationHour,
+                            tip: this.todo.value.tip,
+                            tipAmount: this.todo.value.tipAmount,
+                            goToSomewhere: this.todo.value.goToSomewhere,
+                            placeToGo: placeToGo,
+                        })
+    .then((data) =>
+    {
+      console.log('bien');
+    })
+    .catch((error) =>
+    {
+    console.log(error);
+    });
       
   }
   

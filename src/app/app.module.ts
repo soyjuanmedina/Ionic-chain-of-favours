@@ -18,7 +18,6 @@ import { MyApp } from './app.component';
 import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
-import { FirebaseDbProvider } from '../providers/firebase-db/firebase-db';
 import { DatabaseProvider } from '../providers/database/database';
 
 export const firebaseConfig = {
@@ -66,7 +65,6 @@ export function createTranslateLoader(http: HttpClient) {
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthProvider,
-    FirebaseDbProvider,
     DatabaseProvider,
     Geolocation
   ]

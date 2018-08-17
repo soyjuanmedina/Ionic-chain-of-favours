@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+import { DatabaseProvider } from '../database/database';
 
 /*
   Generated class for the AuthProvider provider.
@@ -11,7 +11,10 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class AuthProvider {
 
-  constructor(private afAuth: AngularFireAuth) {
+  user;
+
+  constructor(private afAuth: AngularFireAuth,
+    private _DB: DatabaseProvider) {
     console.log('Hello AuthProvider Provider');
   }
 
@@ -19,24 +22,37 @@ export class AuthProvider {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((res) => {
         console.log(res);
+        this._DB.addDocument('users',
+          {
+            email
+          })
+          .then((data) => {
+            window.localStorage.setItem("UserID", data.id);
+            window.localStorage.setItem("email", email);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch(err => Promise.reject(err))
   }
 
   loginUser(email: string, password: string) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then(user => Promise.resolve(user))
+      .then(user => {
+        Promise.resolve(this.user = user);
+        window.localStorage.setItem("userUid", this.user.user.uid);
+      })
       .catch(err => Promise.reject(err))
   }
 
   logout() {
     this.afAuth.auth.signOut().then(() => {
-      // hemos salido
+      window.localStorage.clear();
     })
   }
 
   get Session() {
-    console.log('obteniendo sesion');
     return this.afAuth.authState;
   }
   
