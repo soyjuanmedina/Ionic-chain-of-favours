@@ -1,9 +1,15 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController  } from 'ionic-angular';
-import { AuthProvider } from '../../providers/auth/auth';
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController
+} from "ionic-angular";
+import { AuthProvider } from "../../providers/auth/auth";
 
-import { TranslateService } from '@ngx-translate/core';
-import { HomePage } from '../home/home';
+import { TranslateService } from "@ngx-translate/core";
+import { HomePage } from "../home/home";
+import { CreateAccountPage } from "../create-account/create-account";
 
 /**
  * Generated class for the LoginPage page.
@@ -13,67 +19,57 @@ import { HomePage } from '../home/home';
  */
 
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html',
+  selector: "page-login",
+  templateUrl: "login.html"
 })
 export class LoginPage {
-
-  user = { email: '', password: '' };
+  user = { email: "", password: "" };
   idioms: any[] = [];
 
-  constructor(public navCtrl: NavController, 
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
     public auth: AuthProvider,
     public alertCtrl: AlertController,
-    public translateService: TranslateService) {
-    
+    public translateService: TranslateService
+  ) {
     this.idioms = [
       {
-        value: 'es',
-        label: 'SPANISH'
+        value: "es",
+        label: "SPANISH"
       },
       {
-        value: 'en',
-        label: 'ENGLISH'
+        value: "en",
+        label: "ENGLISH"
       }
     ];
   }
 
-  ionViewDidLoad() {
-  }
+  ionViewDidLoad() {}
 
-  signin() {
-    this.auth.registerUser(this.user.email, this.user.password)
-      .then((user) => {
-        // El usuario se ha creado correctamente
-      })
-      .catch(err => {
-        let alert = this.alertCtrl.create({
-          title: 'Error',
-          subTitle: err.message,
-          buttons: ['Aceptar']
-        });
-        alert.present();
-      })
-
+  createAccount() {
+    this.navCtrl.push(CreateAccountPage);
   }
 
   login() {
-    this.auth.loginUser(this.user.email, this.user.password).then((user) => {
-      this.navCtrl.setRoot(HomePage);
-    })
+    // todo almaceno el mail aunque este mal
+    localStorage.setItem("email", this.user.email);
+    this.auth
+      .loginUser(this.user.email, this.user.password)
+      .then(user => {
+        this.navCtrl.setRoot(HomePage);
+      })
       .catch(err => {
         let alert = this.alertCtrl.create({
-          title: 'Error',
+          title: "Error",
           subTitle: err.message,
-          buttons: ['Aceptar']
+          buttons: ["Aceptar"]
         });
         alert.present();
-      })
+      });
   }
 
   setLanguage(lang) {
     this.translateService.use(lang);
   }
-
 }

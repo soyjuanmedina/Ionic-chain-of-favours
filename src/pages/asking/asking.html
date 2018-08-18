@@ -10,14 +10,9 @@
 <ion-content padding>
     <ion-card>
         <ion-card-header>
-            Asking a favour in
+            Asking a favour
         </ion-card-header>
         <ion-card-content>
-            <h1>
-                {{ place }}
-            </h1>
-
-            <hr/>
             <form [formGroup]="todo" (ngSubmit)="askAFavour()">
                 <ion-item>
                     <ion-label floating>Title</ion-label>
@@ -33,11 +28,11 @@
                 </ion-item>
                 <ion-list *ngIf="todo.value.expiration">
                     <ion-item>
-                        <ion-label floating>Start Date</ion-label>
+                        <ion-label floating>Last Date</ion-label>
                         <ion-datetime displayFormat="DD MM YYYY" formControlName="expirationDate"></ion-datetime>
                     </ion-item>
                     <ion-item>
-                        <ion-label floating>Start Time</ion-label>
+                        <ion-label floating>Last Hour</ion-label>
                         <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" formControlName="expirationHour"></ion-datetime>
                     </ion-item>
                 </ion-list>

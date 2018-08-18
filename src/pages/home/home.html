@@ -6,6 +6,18 @@
     </ion-navbar>
 </ion-header>
 <ion-content padding>
+    <ion-card>
+        <ion-card-header>
+            <ion-item>
+                <ion-icon name="md-contact" item-start></ion-icon>
+                Wellcome {{ user.name }}
+            </ion-item>
+        </ion-card-header>
+        <ion-card-content>
+            What do you want to do today?
+        </ion-card-content>
+    </ion-card>
+
     <ion-row>
         <ion-col col-6>
             <a ion-button round class="round-button" (click)="goToPage('AskingPage')">{{ 'ASK_FAVOR' | translate }}</a>

@@ -6,47 +6,50 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{ 'ENTER_TO_APP' | translate}}</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>{{ 'ENTER_TO_APP' | translate}}</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 <ion-content>
-      <ion-list>
+    <ion-list>
         <ion-item>
-          <ion-label>{{ 'CHOOSE_LANGUAGE' | translate}}</ion-label>
-          <ion-select (ionChange)="setLanguage($event)">
-            <ion-option *ngFor="let item of idioms" [value]="item.value">
-              {{ item.label  | translate }}
-            </ion-option>
-          </ion-select>
+            <ion-label>{{ 'CHOOSE_LANGUAGE' | translate}}</ion-label>
+            <ion-select (ionChange)="setLanguage($event)">
+                <ion-option *ngFor="let item of idioms" [value]="item.value">
+                    {{ item.label | translate }}
+                </ion-option>
+            </ion-select>
         </ion-item>
-      </ion-list>
+    </ion-list>
 
-  <ion-list>
-    <form>
-      <ion-item>
-        <ion-label floating>{{ 'EMAIL' | translate}}</ion-label>
-        <ion-input [(ngModel)]="user.email" name="email" type="text" autocapitalize="off" required>
-        </ion-input>
-      </ion-item>
+    <ion-list>
+        <form>
+            <ion-item>
+                <ion-label floating>{{ 'EMAIL' | translate}}</ion-label>
+                <ion-input [(ngModel)]="user.email" name="email" type="text" autocapitalize="off" required>
+                </ion-input>
+            </ion-item>
 
-      <ion-item>
-        <ion-label floating>{{ 'PASSWORD' | translate}}</ion-label>
-        <ion-input [(ngModel)]="user.password" name="password" type="password" required>
-        </ion-input>
-      </ion-item>
-      <div padding>
-        <button ion-button (click)="login()" type="submit" color="primary" block>
-          {{ 'LOGIN' | translate}}
-        </button>
-
-        <button ion-button (click)="signin()" type="submit" color="secondary" block>
-           <!-- 'CREATE_ACCOUNT' -->
-          {{ 'CREATE_ACCOUNT' | translate}}
-        </button>
-      </div>
-    </form>
-  </ion-list>
+            <ion-item>
+                <ion-label floating>{{ 'PASSWORD' | translate}}</ion-label>
+                <ion-input [(ngModel)]="user.password" name="password" type="password" required>
+                </ion-input>
+            </ion-item>
+            <div padding>
+                <button ion-button (click)="login()" type="submit" color="primary" block>
+                {{ 'LOGIN' | translate}}
+              </button>
+                <ion-row>
+                    <ion-col text-center>
+                        <div center>- or -</div>
+                    </ion-col>
+                </ion-row>
+                <div ion-button (click)="createAccount()" type="submit" color="secondary" block>
+                    {{ 'CREATE_ACCOUNT' | translate}}
+                </div>
+            </div>
+        </form>
+    </ion-list>
 </ion-content>

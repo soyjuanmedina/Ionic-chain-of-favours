@@ -1,44 +1,61 @@
-import { importExpr } from '@angular/compiler/src/output/output_ast';
-import { Component } from '@angular/core';
-import { NavController, IonicPage, NavParams } from 'ionic-angular';
+import { importExpr } from "@angular/compiler/src/output/output_ast";
+import { Component } from "@angular/core";
+import { NavController, IonicPage, NavParams } from "ionic-angular";
 
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService } from "@ngx-translate/core";
 
-import { AuthProvider } from '../../providers/auth/auth';
+import { AuthProvider } from "../../providers/auth/auth";
 
 //Pages
-import { AskingPage } from '../asking/asking';
-import { GivingPage } from '../giving/giving';
-import { LoginPage } from '../login/login';
-
-declare var google: any;
+import { AskingPage } from "../asking/asking";
+import { GivingPage } from "../giving/giving";
+import { LoginPage } from "../login/login";
+import { DatabaseProvider } from "../../providers/database/database";
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: "page-home",
+  templateUrl: "home.html"
 })
 export class HomePage {
+  user = {};
 
-  map: any;
-  coords: any = { lat: 0, lng: 0 };
-
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public auth: AuthProvider,
-    public translateService: TranslateService) {
-    
+    public translateService: TranslateService,
+    private _DB: DatabaseProvider
+  ) {
+    if (localStorage) {
+      this.user = localStorage;
+      this.getMyFavours(localStorage.email);
+    }
+  }
+
+  getMyFavours(email) {
+    console.log(email);
+    this._DB
+      .getDocumentsByQuery("favours", "askedMail", email)
+      .then(data => {
+        data.forEach(function(documentSnapshot) {
+          let favour = documentSnapshot.data();
+          console.log(favour);
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   setLanguage(lang) {
     this.translateService.use(lang);
   }
 
-  goToPage(page){
-    this.navCtrl.push(page, this.coords);
+  goToPage(page) {
+    this.navCtrl.push(page);
   }
 
-  closeSesion(){
+  closeSesion() {
     this.auth.logout();
     this.navCtrl.setRoot(LoginPage);
   }
-
 }

@@ -20,6 +20,9 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { DatabaseProvider } from '../providers/database/database';
 
+import { CreateAccountPage } from "../pages/create-account/create-account";
+import { CreateAccountPageModule } from "../pages/create-account/create-account.module";
+
 export const firebaseConfig = {
   apiKey: "AIzaSyDCq-ijTJjzSG639LBOFdDF3bxXXYJ4h3k",
   authDomain: "chain-of-favours.firebaseapp.com",
@@ -45,6 +48,7 @@ export function createTranslateLoader(http: HttpClient) {
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFirestoreModule,
+    CreateAccountPageModule,
     AngularFireAuthModule,
     TranslateModule.forRoot({
       loader: {
