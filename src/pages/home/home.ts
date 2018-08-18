@@ -18,6 +18,7 @@ import { DatabaseProvider } from "../../providers/database/database";
 })
 export class HomePage {
   user = {};
+  myFavours = [];
 
   constructor(
     public navCtrl: NavController,
@@ -32,14 +33,22 @@ export class HomePage {
   }
 
   getMyFavours(email) {
-    console.log(email);
+    console.log(this);
     this._DB
       .getDocumentsByQuery("favours", "askedMail", email)
       .then(data => {
+        console.log(this);
+        let favours = [];
         data.forEach(function(documentSnapshot) {
+          
+          console.log(this);
           let favour = documentSnapshot.data();
+          favours.push(favour);
           console.log(favour);
-        });
+          //this.favores.push(favour);
+        })
+        this.myFavours = favours;
+        ;
       })
       .catch(error => {
         console.log(error);
