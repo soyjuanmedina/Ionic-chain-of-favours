@@ -69,7 +69,24 @@ export class DatabaseProvider {
         .collection(collectionObj)
         .get()
         .then(querySnapshot => {
-          resolve(querySnapshot);
+          // Declare an array which we'll use to store retrieved documents
+          let obj: any = [];
+
+          // Iterate through each document, retrieve the values for each field
+          // and then assign these to a key in an object that is pushed into the
+          // obj array
+          querySnapshot.forEach((doc: any) => {
+            obj.push({
+              id: doc.id,
+              city: doc.data().city,
+              population: doc.data().population,
+              established: doc.data().established
+            });
+          });
+
+          // Resolve the completed array that contains all of the formatted data
+          // from the retrieved documents
+          resolve(obj);
         })
         .catch((error: any) => {
           reject(error);

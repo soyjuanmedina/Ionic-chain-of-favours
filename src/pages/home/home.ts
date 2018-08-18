@@ -43,6 +43,7 @@ export class HomePage {
           
           console.log(this);
           let favour = documentSnapshot.data();
+          favour.id = documentSnapshot.id;
           favours.push(favour);
           console.log(favour);
           //this.favores.push(favour);

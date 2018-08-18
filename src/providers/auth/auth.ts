@@ -37,6 +37,7 @@ export class AuthProvider {
           .getDocumentsByQuery("users", "email", email)
           .then(data => {
             data.forEach(function(documentSnapshot) {
+              localStorage.setItem("id", data.id)
               var document = documentSnapshot.data();
               for (var key in document) {
                 localStorage.setItem(key, document[key]);
