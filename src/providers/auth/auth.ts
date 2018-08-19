@@ -34,7 +34,7 @@ export class AuthProvider {
       .then(user => {
         Promise.resolve((this.user = user));
         this._DB
-          .getDocumentsByQuery("users", "email", email)
+          .getDocumentsByQuery("users", "email", "==", email)
           .then(data => {
             data.forEach(function(documentSnapshot) {
               localStorage.setItem("id", data.id)

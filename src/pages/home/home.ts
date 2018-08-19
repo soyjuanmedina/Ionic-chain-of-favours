@@ -19,6 +19,8 @@ import { DatabaseProvider } from "../../providers/database/database";
 export class HomePage {
   user = {};
   myFavours = [];
+  favoursToDo = [];
+  allFavours = [];
 
   constructor(
     public navCtrl: NavController,
@@ -28,20 +30,40 @@ export class HomePage {
   ) {
     if (localStorage) {
       this.user = localStorage;
-      this.getMyFavours(localStorage.email);
+      this.getAllFavours(localStorage.email);
     }
   }
 
-  getMyFavours(email) {
-    console.log(this);
+  getAllFavours(email) {
     this._DB
-      .getDocumentsByQuery("favours", "askedMail", email)
+      .getDocuments("favours")
       .then(data => {
-        console.log(this);
         let favours = [];
         data.forEach(function(documentSnapshot) {
-          
-          console.log(this);
+          let favour = documentSnapshot.data();
+          favour.id = documentSnapshot.id;
+          favours.push(favour);
+          console.log(favour);
+          //this.favores.push(favour);
+        })
+        this.allFavours = favours;
+        this.myFavours = this.allFavours.filter(function (favour) {
+          console.log(favour)
+          return favour.askedMail == localStorage.email;
+        });
+        ;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  getMyFavours(email) {
+    this._DB
+      .getDocumentsByQuery("favours", "askedMail", "==", email)
+      .then(data => {
+        let favours = [];
+        data.forEach(function(documentSnapshot) {
           let favour = documentSnapshot.data();
           favour.id = documentSnapshot.id;
           favours.push(favour);
@@ -49,6 +71,26 @@ export class HomePage {
           //this.favores.push(favour);
         })
         this.myFavours = favours;
+        ;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  getFavoursToDo(email) {
+    this._DB
+      .getDocumentsByQuery("favours", "askedMail", "!=", email)
+      .then(data => {
+        let favours = [];
+        data.forEach(function(documentSnapshot) {
+          let favour = documentSnapshot.data();
+          favour.id = documentSnapshot.id;
+          favours.push(favour);
+          console.log(favour);
+          //this.favores.push(favour);
+        })
+        this.favoursToDo = favours;
         ;
       })
       .catch(error => {
