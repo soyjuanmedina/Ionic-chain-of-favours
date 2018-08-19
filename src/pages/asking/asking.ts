@@ -24,7 +24,7 @@ import { DatabaseProvider } from "../../providers/database/database";
 })
 export class AskingPage {
   coords: any = { lat: 0, lng: 0 };
-  address: string;
+  location: string;
   place: string;
   todo: any;
 
@@ -45,19 +45,14 @@ export class AskingPage {
       tip: false,
       tipAmount: [""],
       goToSomewhere: false,
-      placeToGo: [""]
+      location: [""]
     });
 
   }
 
-  setCurrentPosition() {
-    console.log(this.address);
-    this.todo.placeToGo = this.address;
-    let miMarker = new google.maps.Marker({
-      icon: "assets/imgs/location-mark.png",
-      map: this.map,
-      position: this.coords
-    });
+  setMyLocation() {
+    this.todo.location = this.location;
+    
   }
 
   askAFavour() {
@@ -78,11 +73,11 @@ export class AskingPage {
         tip: this.todo.value.tip,
         tipAmount: this.todo.value.tipAmount,
         goToSomewhere: this.todo.value.goToSomewhere,
-        placeToGo: placeToGo,
+        location: this.todo.value.location,
         askedMail: askedMail
       })
       .then(data => {
-        this.navCtrl.pop;
+        this.navCtrl.pop();
       })
       .catch(error => {
         console.log(error);
@@ -115,7 +110,13 @@ export class AskingPage {
     this.coords.lat = this.navParams.get('lat');
     this.coords.lng = this.navParams.get('lng');
     this.getAddress(this.coords).then(res => {
-      this.address = res[0]["formatted_address"];
+      this.location = res[1]["formatted_address"];
+      this.todo.location = this.location;
+      let miMarker = new google.maps.Marker({
+        icon: "assets/imgs/location-mark.png",
+        map: this.map,
+        position: this.coords
+      });
     });
     this.loadMap();
   }

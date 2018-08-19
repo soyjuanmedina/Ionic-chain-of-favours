@@ -50,23 +50,18 @@
 
 
                 <ion-item>
-                    <ion-label>Needs to go somewhere?</ion-label>
+                    <ion-label>Location favour?</ion-label>
                     <ion-toggle formControlName="goToSomewhere"></ion-toggle>
                 </ion-item>
 
                 <div [hidden]="!todo.value.goToSomewhere">
                     <ion-item>
-                        <ion-label floating>Place to go</ion-label>
-                        <ion-input type="text" [(ngModel)]="todo.placeToGo" formControlName="placeToGo"></ion-input>
+                        <ion-label floating>Location</ion-label>
+                        <ion-input disabled="true" type="text" [(ngModel)]="todo.location" formControlName="location"></ion-input>
                     </ion-item>
-
-                    <a ion-button small (click)="setCurrentPosition()">Set to my current position</a>
 
                     <div id="map"></div>
                 </div>
-
-
-
 
                 <button ion-button type="submit" [disabled]="!todo.valid">Submit</button>
             </form>

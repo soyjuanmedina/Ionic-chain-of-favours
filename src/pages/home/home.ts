@@ -36,10 +36,6 @@ export class HomePage {
     private geolocation: Geolocation,
     private _DB: DatabaseProvider
   ) {
-    if (localStorage) {
-      this.user = localStorage;
-      this.getAllFavours(localStorage.email);
-    }
     platform.ready().then(() => {
       // La plataforma esta lista y ya tenemos acceso a los plugins.
       this.getLocation();
@@ -149,4 +145,14 @@ export class HomePage {
     this.auth.logout();
     this.navCtrl.setRoot(LoginPage);
   }
+
+
+  ionViewWillEnter() {
+    if (localStorage) {
+      this.user = localStorage;
+      this.getAllFavours(localStorage.email);
+    }
+  }
+
+
 }
