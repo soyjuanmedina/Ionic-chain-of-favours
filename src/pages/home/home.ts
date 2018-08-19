@@ -6,6 +6,10 @@ import { TranslateService } from "@ngx-translate/core";
 
 import { AuthProvider } from "../../providers/auth/auth";
 
+import { Geolocation } from "@ionic-native/geolocation";
+import { Platform } from "ionic-angular";
+declare var google: any;
+
 //Pages
 import { AskingPage } from "../asking/asking";
 import { GivingPage } from "../giving/giving";
@@ -21,17 +25,25 @@ export class HomePage {
   myFavours = [];
   favoursToDo = [];
   allFavours = [];
+  coords: any = { lat: 0, lng: 0 };
+  address: string;
 
   constructor(
     public navCtrl: NavController,
     public auth: AuthProvider,
     public translateService: TranslateService,
+    public platform: Platform,
+    private geolocation: Geolocation,
     private _DB: DatabaseProvider
   ) {
     if (localStorage) {
       this.user = localStorage;
       this.getAllFavours(localStorage.email);
     }
+    platform.ready().then(() => {
+      // La plataforma esta lista y ya tenemos acceso a los plugins.
+      this.getLocation();
+    });
   }
 
   getAllFavours(email) {
@@ -43,12 +55,10 @@ export class HomePage {
           let favour = documentSnapshot.data();
           favour.id = documentSnapshot.id;
           favours.push(favour);
-          console.log(favour);
           //this.favores.push(favour);
         })
         this.allFavours = favours;
         this.myFavours = this.allFavours.filter(function (favour) {
-          console.log(favour)
           return favour.askedMail == localStorage.email;
         });
         ;
@@ -98,12 +108,41 @@ export class HomePage {
       });
   }
 
+  getLocation(): any {
+    this.geolocation
+      .getCurrentPosition()
+      .then(res => {
+        this.coords.lat = res.coords.latitude;
+        this.coords.lng = res.coords.longitude;
+        this.getAddress(this.coords).then(res => {
+          this.address = res[0]["formatted_address"];
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  getAddress(coords): any {
+    var geocoder = new google.maps.Geocoder();
+    return new Promise(function(resolve, reject) {
+      geocoder.geocode({ location: coords }, function(results, status) {
+        // llamado asincronamente
+        if (status == google.maps.GeocoderStatus.OK) {
+          resolve(results);
+        } else {
+          reject(status);
+        }
+      });
+    });
+  }
+
   setLanguage(lang) {
     this.translateService.use(lang);
   }
 
   goToPage(page) {
-    this.navCtrl.push(page);
+    this.navCtrl.push(page, this.coords);
   }
 
   closeSesion() {

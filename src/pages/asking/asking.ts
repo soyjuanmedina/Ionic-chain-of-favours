@@ -8,9 +8,6 @@ import {
 } from "@angular/forms";
 declare var google: any;
 
-import { Geolocation } from "@ionic-native/geolocation";
-import { Platform } from "ionic-angular";
-
 import { DatabaseProvider } from "../../providers/database/database";
 
 /**
@@ -37,8 +34,6 @@ export class AskingPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
-    public platform: Platform,
-    private geolocation: Geolocation,
     private _DB: DatabaseProvider
   ) {
     this.todo = this.formBuilder.group({
@@ -53,10 +48,6 @@ export class AskingPage {
       placeToGo: [""]
     });
 
-    platform.ready().then(() => {
-      // La plataforma esta lista y ya tenemos acceso a los plugins.
-      this.getLocation();
-    });
   }
 
   setCurrentPosition() {
@@ -91,23 +82,7 @@ export class AskingPage {
         askedMail: askedMail
       })
       .then(data => {
-        console.log("bien");
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  getLocation(): any {
-    this.geolocation
-      .getCurrentPosition()
-      .then(res => {
-        this.coords.lat = res.coords.latitude;
-        this.coords.lng = res.coords.longitude;
-        this.getAddress(this.coords).then(res => {
-          this.address = res[0]["formatted_address"];
-        });
-        this.loadMap();
+        this.navCtrl.pop;
       })
       .catch(error => {
         console.log(error);
@@ -136,5 +111,12 @@ export class AskingPage {
     });
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+    this.coords.lat = this.navParams.get('lat');
+    this.coords.lng = this.navParams.get('lng');
+    this.getAddress(this.coords).then(res => {
+      this.address = res[0]["formatted_address"];
+    });
+    this.loadMap();
+  }
 }
