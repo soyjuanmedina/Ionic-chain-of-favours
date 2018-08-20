@@ -57,7 +57,7 @@ export class AskingPage {
 
   askAFavour() {
     let askedMail = localStorage.email ? localStorage.email : "";
-    let askedUsedId = localStorage.userId ? localStorage.userId : "";
+    let askedUserId = localStorage.userId ? localStorage.userId : "";
 
     let placeToGo =
       typeof this.todo.value.placeToGo === "undefined"
@@ -76,7 +76,7 @@ export class AskingPage {
         goToSomewhere: this.todo.value.goToSomewhere,
         location: this.todo.value.location,
         askedMail: askedMail,
-        askedUsedId: askedUsedId
+        askedUserId: askedUserId
       })
       .then(data => {
         this.navCtrl.pop();

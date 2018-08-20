@@ -15,11 +15,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FavourPage {
   favour; 
+  itsMine: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams) {
       console.log(navParams);
       this.favour = this.navParams.get('favour');
+      if(localStorage.userId == this.favour.askedUserId || localStorage.email == this.favour.askedMail){
+        this.itsMine = true;
+      }
 
   }
 
