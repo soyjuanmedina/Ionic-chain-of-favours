@@ -15,9 +15,18 @@
 
 <ion-content padding>
 
-    <p *ngIf="itsMine">
-        Este es mio
-     </p>
+    <div *ngIf="itsMine">
+
+      <button ion-button outline item-end icon-start (click)="editing = true">
+        <ion-icon name="create" ></ion-icon>
+        Edit favour
+      </button>
+
+      <button ion-button outline item-end icon-start color="danger" (click)="deleteFavour()">
+        <ion-icon name="trash"></ion-icon>
+        Delete favour
+      </button>
+    </div>
 
   <ion-card>
       <ion-card-header>
@@ -46,7 +55,10 @@
              <p *ngIf="favour.location">
                 location: {{ favour.location }}
              </p>
-
+            <div *ngIf="editing">
+              <button ion-button>Default</button>
+              <button ion-button (click)="editing = false">Cancel</button>
+            </div>
       </ion-card-content>
   </ion-card>
 </ion-content>
