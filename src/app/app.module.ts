@@ -18,6 +18,7 @@ import { MyApp } from './app.component';
 import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
+import { FavourPage } from "../pages/favour/favour";
 import { DatabaseProvider } from '../providers/database/database';
 
 import { CreateAccountPage } from "../pages/create-account/create-account";
@@ -41,6 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
     MyApp,
     LoginPage,
     HomePage,
+    FavourPage,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +65,7 @@ export function createTranslateLoader(http: HttpClient) {
     MyApp,
     LoginPage,
     HomePage,
+    FavourPage,
   ],
   providers: [
     StatusBar,

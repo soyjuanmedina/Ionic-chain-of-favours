@@ -1,0 +1,47 @@
+<!--
+  Generated template for the FavourPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{ favour.title }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+      <ion-card-header>
+        {{ favour.title }}
+      </ion-card-header>
+      <ion-card-content>
+             <p>
+                Title: {{ favour.title }}
+             </p>
+             <p>
+                Description: {{ favour.description }}
+             </p>
+             <hr/>
+             <p>
+                Usefull information
+             </p>
+             <p *ngIf="favour.expirationDate">
+                expirationDate: {{ favour.expirationDate }}
+             </p>
+             <p *ngIf="favour.expirationHour">
+                expirationHour: {{ favour.expirationHour }}
+             </p>
+             <p *ngIf="favour.tip">
+                tipAmount: {{ favour.tipAmount }}
+             </p>
+             <p *ngIf="favour.location">
+                location: {{ favour.location }}
+             </p>
+
+      </ion-card-content>
+  </ion-card>
+</ion-content>

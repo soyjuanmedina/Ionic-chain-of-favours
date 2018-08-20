@@ -34,7 +34,7 @@
     <div *ngIf="myFavours?.length > 0">
         Fvores que has pedido
     <ion-list>
-        <ion-item *ngFor="let favour of myFavours; let i=index">
+        <ion-item *ngFor="let favour of myFavours; let i=index" (click)="updateFavour(favour)">
           <ion-avatar item-start>
             <img src="img/avatar-finn.png">
           </ion-avatar>
@@ -56,7 +56,7 @@
     <div *ngIf="allFavours?.length > 0">
       FAvores en {{ user.favoriteLocation }}
     <ion-list>
-        <ion-item *ngFor="let favour of allFavours; let i=index">
+        <ion-item *ngFor="let favour of allFavours; let i=index" (click)="updateFavour(favour)">
           <ion-avatar item-start>
             <img src="img/avatar-finn.png">
           </ion-avatar>
@@ -72,7 +72,7 @@
     <div *ngIf="favoursNoLocation?.length > 0">
             FAvores que puedes hacer sin desplazarte
           <ion-list>
-              <ion-item *ngFor="let favour of allFavours; let i=index">
+              <ion-item *ngFor="let favour of allFavours; let i=index" (click)="updateFavour(favour)">
                 <ion-avatar item-start>
                   <img src="img/avatar-finn.png">
                 </ion-avatar>

@@ -12,6 +12,7 @@ declare var google: any;
 
 //Pages
 import { AskingPage } from "../asking/asking";
+import { FavourPage } from "../favour/favour";
 import { GivingPage } from "../giving/giving";
 import { LoginPage } from "../login/login";
 import { DatabaseProvider } from "../../providers/database/database";
@@ -144,6 +145,10 @@ export class HomePage {
   closeSesion() {
     this.auth.logout();
     this.navCtrl.setRoot(LoginPage);
+  }
+
+  updateFavour(favour){
+    this.navCtrl.push(FavourPage, { favour });
   }
 
 
