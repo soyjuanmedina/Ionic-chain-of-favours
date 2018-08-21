@@ -5,6 +5,8 @@ import * as _ from 'lodash';
 import { DatabaseProvider } from "../../providers/database/database";
 declare var localStorage: any;
 
+import { ChatPage } from "../chat/chat";
+
 /**
  * Generated class for the FavourPage page.
  *
@@ -21,6 +23,7 @@ export class FavourPage {
   favour;
   uneditedFavour;
   itsMine: boolean = false;
+  illGoToDoIt: boolean = false;
   editing: boolean = false;
 
   constructor(public navCtrl: NavController,
@@ -32,6 +35,9 @@ export class FavourPage {
       if(localStorage.userId == this.favour.askedUserId || localStorage.email == this.favour.askedMail){
         this.itsMine = true;
       }
+      if(localStorage.userId == this.favour.doItUserId){
+        this.illGoToDoIt = true;
+      }
   }
 
   editFavour(){
@@ -39,12 +45,22 @@ export class FavourPage {
     console.log(this.favour);
   }
 
+  chat(){
+    this.navCtrl.push(ChatPage);
+  }
+
   doFavour(){
     this.favour.status = 'In progress';
     this.favour.doItUserId = localStorage.userId;
     this._DB.updateDocument("favours", this.favour.id, this.favour)
     .then(data => {
-      console.log('Ok... yuo do it');
+      const alert = this.alertCtrl.create({
+        title: 'Thanks for your help',
+        subTitle: 'Now you can chat with the asked user to concretate',
+        buttons: ['OK']
+      });
+      alert.present();
+      this.illGoToDoIt = true;
       })
       .catch(error => {
         console.log(error);
@@ -76,7 +92,6 @@ export class FavourPage {
         buttons: ['OK']
       });
       alert.present();
-      console.log(this.favour);
       })
       .catch(error => {
         console.log(error);

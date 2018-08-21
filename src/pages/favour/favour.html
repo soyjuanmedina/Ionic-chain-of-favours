@@ -15,13 +15,21 @@
 
 <ion-content padding>
 
-        <div *ngIf="!itsMine">
+    <div *ngIf="illGoToDoIt">
 
-            <button ion-button outline item-end icon-start (click)="doFavour()">
-                <ion-icon name="checkmark-circle" ></ion-icon>
-                Do this favour
-            </button>
-        </div>
+        <button ion-button outline item-end icon-start (click)="chat()">
+            <ion-icon name="checkmark-circle" ></ion-icon>
+            Chat with the asker
+        </button>
+    </div>
+    
+    <div *ngIf="!itsMine && !illGoToDoIt">
+
+        <button ion-button outline item-end icon-start (click)="doFavour()">
+            <ion-icon name="checkmark-circle" ></ion-icon>
+            Do this favour
+        </button>
+    </div>
 
     <div *ngIf="itsMine">
 

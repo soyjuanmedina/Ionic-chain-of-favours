@@ -19,6 +19,7 @@ import { AuthProvider } from '../providers/auth/auth';
 import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { FavourPage } from "../pages/favour/favour";
+import { ChatPage } from "../pages/chat/chat";
 import { DatabaseProvider } from '../providers/database/database';
 
 import { CreateAccountPage } from "../pages/create-account/create-account";
@@ -43,6 +44,7 @@ export function createTranslateLoader(http: HttpClient) {
     LoginPage,
     HomePage,
     FavourPage,
+    ChatPage
   ],
   imports: [
     BrowserModule,
@@ -66,6 +68,7 @@ export function createTranslateLoader(http: HttpClient) {
     LoginPage,
     HomePage,
     FavourPage,
+    ChatPage
   ],
   providers: [
     StatusBar,

@@ -32,9 +32,9 @@
     </ion-row>
 
     <div *ngIf="myFavours?.length > 0">
-        Fvores que has pedido
+        Favores que has pedido
     <ion-list>
-        <ion-item *ngFor="let favour of myFavours; let i=index" (click)="updateFavour(favour)">
+        <ion-item *ngFor="let favour of myFavours; let i=index" (click)="showFavour(favour)">
           <ion-avatar item-start>
             <img src="img/avatar-finn.png">
           </ion-avatar>
@@ -53,10 +53,11 @@
             <button ion-button block (click)="goToPage('AskingPage')">Pedir un favor</button>
     </div>
 
-    <div *ngIf="allFavours?.length > 0">
-      FAvores en {{ user.favoriteLocation }}
+
+    <div *ngIf="favoursIllDo?.length > 0">
+        Favores que vas a hacer
     <ion-list>
-        <ion-item *ngFor="let favour of allFavours; let i=index" (click)="updateFavour(favour)">
+        <ion-item *ngFor="let favour of favoursIllDo; let i=index" (click)="showFavour(favour)">
           <ion-avatar item-start>
             <img src="img/avatar-finn.png">
           </ion-avatar>
@@ -69,18 +70,33 @@
 
 
 
-    <div *ngIf="favoursNoLocation?.length > 0">
-            FAvores que puedes hacer sin desplazarte
-          <ion-list>
-              <ion-item *ngFor="let favour of allFavours; let i=index" (click)="updateFavour(favour)">
-                <ion-avatar item-start>
-                  <img src="img/avatar-finn.png">
-                </ion-avatar>
-                <h2>{{ favour.title }}</h2>
-                <h3>{{ favour.description }}</h3>
-                <p>{{ favour.id }}</p>
-              </ion-item>
-            </ion-list>
-          </div>
+    <div *ngIf="favoursInMyLocation?.length > 0">
+        Favores en {{ address }}
+    <ion-list>
+        <ion-item *ngFor="let favour of favoursInMyLocation; let i=index" (click)="showFavour(favour)">
+          <ion-avatar item-start>
+            <img src="img/avatar-finn.png">
+          </ion-avatar>
+          <h2>{{ favour.title }}</h2>
+          <h3>{{ favour.description }}</h3>
+          <p>{{ favour.id }}</p>
+        </ion-item>
+      </ion-list>
+    </div>
+    
+    <div *ngIf="favoursWithoutLocation?.length > 0">
+        Favores sin localización
+    <ion-list>
+        <ion-item *ngFor="let favour of favoursWithoutLocation; let i=index" (click)="showFavour(favour)">
+          <ion-avatar item-start>
+            <img src="img/avatar-finn.png">
+          </ion-avatar>
+          <h2>{{ favour.title }}</h2>
+          <h3>{{ favour.description }}</h3>
+          <p>{{ favour.id }}</p>
+        </ion-item>
+      </ion-list>
+    </div>
+
 
 </ion-content>

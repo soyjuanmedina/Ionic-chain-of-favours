@@ -25,7 +25,9 @@ import { DatabaseProvider } from "../../providers/database/database";
 export class HomePage {
   user = {};
   myFavours = [];
-  favoursToDo = [];
+  favoursInMyLocation = [];
+  favoursWithoutLocation = [];
+  favoursIllDo = [];
   allFavours = [];
   coords: any = { lat: 0, lng: 0 };
   address: string;
@@ -56,50 +58,26 @@ export class HomePage {
           //this.favores.push(favour);
         })
         this.allFavours = favours;
+        
         this.myFavours = this.allFavours.filter(function (favour) {
           return favour.askedMail == localStorage.email;
         });
-        ;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
+        this.favoursInMyLocation = this.allFavours.filter(function (favour) {
+          return favour.location == localStorage.location && favour.doItUserId != localStorage.userId && favour.askedMail != localStorage.email;
+        });
+        this.favoursWithoutLocation = this.allFavours.filter(function (favour) {
+          return favour.location == "" && favour.doItUserId != localStorage.userId && favour.askedMail != localStorage.email;
+        });
+        this.favoursIllDo = this.allFavours.filter(function (favour) {
+          return favour.doItUserId == localStorage.userId;
+        });
 
-  getMyFavours(email) {
-    this._DB
-      .getDocumentsByQuery("favours", "askedMail", "==", email)
-      .then(data => {
-        let favours = [];
-        data.forEach(function(documentSnapshot) {
-          let favour = documentSnapshot.data();
-          favour.id = documentSnapshot.id;
-          favours.push(favour);
-          console.log(favour);
-          //this.favores.push(favour);
-        })
-        this.myFavours = favours;
-        ;
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }
-
-  getFavoursToDo(email) {
-    this._DB
-      .getDocumentsByQuery("favours", "askedMail", "!=", email)
-      .then(data => {
-        let favours = [];
-        data.forEach(function(documentSnapshot) {
-          let favour = documentSnapshot.data();
-          favour.id = documentSnapshot.id;
-          favours.push(favour);
-          console.log(favour);
-          //this.favores.push(favour);
-        })
-        this.favoursToDo = favours;
-        ;
+        console.log('todos', this.allFavours);
+        console.log('mios', this.myFavours);
+        console.log('aqui', this.favoursInMyLocation);
+        console.log('sin location', this.favoursWithoutLocation);
+        console.log('que hare', this.favoursIllDo);
+      
       })
       .catch(error => {
         console.log(error);
@@ -113,7 +91,8 @@ export class HomePage {
         this.coords.lat = res.coords.latitude;
         this.coords.lng = res.coords.longitude;
         this.getAddress(this.coords).then(res => {
-          this.address = res[0]["formatted_address"];
+          this.address = res[1]["formatted_address"];
+          localStorage.setItem('location', this.address);
         });
       })
       .catch(error => {
@@ -148,12 +127,13 @@ export class HomePage {
     this.navCtrl.setRoot(LoginPage);
   }
 
-  updateFavour(favour){
+  showFavour(favour){
     this.navCtrl.push(FavourPage, { favour });
   }
 
 
   ionViewWillEnter() {
+    console.log(this.address);
     if (localStorage) {
       this.user = localStorage;
       this.getAllFavours(localStorage.email);
