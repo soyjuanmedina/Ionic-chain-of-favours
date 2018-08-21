@@ -65,6 +65,10 @@ export class AskingPage {
         ? ""
         : this.todo.value.placeToGo;
 
+    if(!this.todo.value.goToSomewhere){
+      this.todo.value.location = "";
+    }
+
     this._DB
       .addDocument("favours", {
         title: this.todo.value.title,
