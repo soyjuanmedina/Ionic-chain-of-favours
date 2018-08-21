@@ -9,6 +9,7 @@ import { AuthProvider } from "../../providers/auth/auth";
 import { Geolocation } from "@ionic-native/geolocation";
 import { Platform } from "ionic-angular";
 declare var google: any;
+declare var localStorage: any;
 
 //Pages
 import { AskingPage } from "../asking/asking";

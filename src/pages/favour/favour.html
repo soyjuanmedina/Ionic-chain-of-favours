@@ -17,7 +17,7 @@
 
     <div *ngIf="itsMine">
 
-      <button ion-button outline item-end icon-start (click)="editing = true">
+      <button ion-button outline item-end icon-start (click)="editFavour()">
         <ion-icon name="create" ></ion-icon>
         Edit favour
       </button>
@@ -27,37 +27,84 @@
         Delete favour
       </button>
     </div>
-
+    {{ favour.title }}
   <ion-card>
       <ion-card-header>
-        {{ favour.title }}
+        <span *ngIf="editing"> You are editing this favour</span>
       </ion-card-header>
       <ion-card-content>
-             <p>
-                Title: {{ favour.title }}
-             </p>
-             <p>
-                Description: {{ favour.description }}
-             </p>
+            <div  *ngIf="editing">
+              Title:
+             <ion-input type="text"[(ngModel)]="favour.title"></ion-input>
+            </div>
+            <div>
+              Description: <span *ngIf="!editing">{{ favour.description }}</span>
+              <ion-input  *ngIf="editing" type="text"[(ngModel)]="favour.description"></ion-input>
+            </div>
+
              <hr/>
-             <p>
-                Usefull information
-             </p>
-             <p *ngIf="favour.expirationDate">
-                expirationDate: {{ favour.expirationDate }}
-             </p>
-             <p *ngIf="favour.expirationHour">
-                expirationHour: {{ favour.expirationHour }}
-             </p>
-             <p *ngIf="favour.tip">
-                tipAmount: {{ favour.tipAmount }}
-             </p>
-             <p *ngIf="favour.location">
-                location: {{ favour.location }}
-             </p>
+             <div *ngIf="!editing">
+                <p>
+                    Usefull information
+                 </p>
+                 <p *ngIf="favour.expirationDate">
+                    expirationDate: {{ favour.expirationDate }}
+                 </p>
+                 <p *ngIf="favour.expirationHour">
+                    expirationHour: {{ favour.expirationHour }}
+                 </p>
+                 <p *ngIf="favour.tip">
+                    tipAmount: {{ favour.tipAmount }}
+                 </p>
+                 <p *ngIf="favour.location">
+                    location: {{ favour.location }}
+                 </p>
+             </div>
+             
             <div *ngIf="editing">
-              <button ion-button>Default</button>
-              <button ion-button (click)="editing = false">Cancel</button>
+                <ion-item>
+                    <ion-label>The favour has deadline</ion-label>
+                    <ion-toggle [(ngModel)]="favour.expiration"></ion-toggle>
+                </ion-item>
+                <ion-list *ngIf="favour.expiration">
+                    <ion-item>
+                        <ion-label floating>Last Date</ion-label>
+                        <ion-datetime displayFormat="DD MM YYYY" [(ngModel)]="favour.expirationDate"></ion-datetime>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label floating>Last Hour</ion-label>
+                        <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="favour.expirationHour"></ion-datetime>
+                    </ion-item>
+                </ion-list>
+
+                <ion-item>
+                    <ion-label>Do you want offer a tip?</ion-label>
+                    <ion-toggle [(ngModel)]="favour.tip"></ion-toggle>
+                </ion-item>
+                <ion-item *ngIf="favour.tip">
+                    <ion-label>Tip amount: {{favour.tipAmount}} €</ion-label>
+                    <ion-range min="1" max="10" pin="true" [(ngModel)]="favour.tipAmount">
+                        <ion-label range-left>1 €</ion-label>
+                        <ion-label range-right>10 €</ion-label>
+                    </ion-range>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>Location favour?</ion-label>
+                    <ion-toggle [(ngModel)]="favour.goToSomewhere"></ion-toggle>
+                </ion-item>
+
+                <div [hidden]="!favour.goToSomewhere">
+                    <ion-item>
+                        <ion-label floating>Location</ion-label>
+                        <ion-input disabled="true" type="text" [(ngModel)]="favour.location"></ion-input>
+                    </ion-item>
+
+                    <div id="map"></div>
+                </div>
+
+              <button ion-button (click)="updateFavour()">Update favour</button>
+              <button ion-button (click)="cancelEdition()">Cancel</button>
             </div>
       </ion-card-content>
   </ion-card>

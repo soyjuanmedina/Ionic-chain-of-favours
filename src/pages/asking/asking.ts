@@ -7,6 +7,7 @@ import {
   FormBuilder
 } from "@angular/forms";
 declare var google: any;
+declare var localStorage: any;
 
 import { DatabaseProvider } from "../../providers/database/database";
 

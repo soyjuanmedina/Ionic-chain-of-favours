@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import * as _ from 'lodash';
 
 import { DatabaseProvider } from "../../providers/database/database";
+declare var localStorage: any;
 
 /**
  * Generated class for the FavourPage page.
@@ -16,24 +18,29 @@ import { DatabaseProvider } from "../../providers/database/database";
   templateUrl: 'favour.html',
 })
 export class FavourPage {
-  favour; 
+  favour;
+  uneditedFavour;
   itsMine: boolean = false;
   editing: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private _DB: DatabaseProvider) {
-      console.log(navParams);
       this.favour = this.navParams.get('favour');
+      this.uneditedFavour = _.clone(this.favour);
       if(localStorage.userId == this.favour.askedUserId || localStorage.email == this.favour.askedMail){
         this.itsMine = true;
       }
   }
 
   editFavour(){
-    console.log(this.editing);
     this.editing = true;
-    console.log(this.editing);
+    console.log(this.favour);
+  }
+
+  cancelEdition(){
+    this.favour = this.uneditedFavour;
+    this.editing = false;
   }
 
   deleteFavour(){
@@ -44,8 +51,11 @@ export class FavourPage {
       })
       .catch(error => {
         console.log(error);
-      });
-    
+      }); 
+  }
+
+  updateFavour(){
+    console.log(this.favour);
   }
 
   ionViewDidLoad() {
