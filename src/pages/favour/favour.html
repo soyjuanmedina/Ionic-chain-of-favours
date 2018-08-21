@@ -15,6 +15,14 @@
 
 <ion-content padding>
 
+        <div *ngIf="!itsMine">
+
+            <button ion-button outline item-end icon-start (click)="doFavour()">
+                <ion-icon name="checkmark-circle" ></ion-icon>
+                Do this favour
+            </button>
+        </div>
+
     <div *ngIf="itsMine">
 
       <button ion-button outline item-end icon-start (click)="editFavour()">
@@ -47,12 +55,14 @@
                 <p>
                     Usefull information
                  </p>
-                 <p *ngIf="favour.expirationDate">
-                    expirationDate: {{ favour.expirationDate }}
-                 </p>
-                 <p *ngIf="favour.expirationHour">
-                    expirationHour: {{ favour.expirationHour }}
-                 </p>
+                 <div *ngIf="favour.expiration">
+                    <p *ngIf="favour.expirationDate">
+                        expirationDate: {{ favour.expirationDate }}
+                    </p>
+                    <p *ngIf="favour.expirationHour">
+                        expirationHour: {{ favour.expirationHour }}
+                    </p>
+                </div>
                  <p *ngIf="favour.tip">
                     tipAmount: {{ favour.tipAmount }}
                  </p>

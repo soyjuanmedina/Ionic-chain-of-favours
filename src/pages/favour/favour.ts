@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import * as _ from 'lodash';
 
 import { DatabaseProvider } from "../../providers/database/database";
@@ -25,7 +25,8 @@ export class FavourPage {
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    private _DB: DatabaseProvider) {
+    private _DB: DatabaseProvider,
+    public alertCtrl: AlertController) {
       this.favour = this.navParams.get('favour');
       this.uneditedFavour = _.clone(this.favour);
       if(localStorage.userId == this.favour.askedUserId || localStorage.email == this.favour.askedMail){
@@ -38,6 +39,18 @@ export class FavourPage {
     console.log(this.favour);
   }
 
+  doFavour(){
+    this.favour.status = 'In progress';
+    this.favour.doItUserId = localStorage.userId;
+    this._DB.updateDocument("favours", this.favour.id, this.favour)
+    .then(data => {
+      console.log('Ok... yuo do it');
+      })
+      .catch(error => {
+        console.log(error);
+      }); 
+  }
+
   cancelEdition(){
     this.favour = this.uneditedFavour;
     this.editing = false;
@@ -46,7 +59,6 @@ export class FavourPage {
   deleteFavour(){
     this._DB.deleteDocument("favours", this.favour.id)
     .then(data => {
-      console.log('eliminado');
       this.navCtrl.pop();
       })
       .catch(error => {
@@ -55,11 +67,24 @@ export class FavourPage {
   }
 
   updateFavour(){
-    console.log(this.favour);
+    this.editing = false;
+    this._DB.updateDocument("favours", this.favour.id, this.favour)
+    .then(data => {
+      const alert = this.alertCtrl.create({
+        title: 'Correct update',
+        subTitle: 'Your favour have been updated',
+        buttons: ['OK']
+      });
+      alert.present();
+      console.log(this.favour);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FavourPage');
+    console.log(this.favour);
   }
 
 }

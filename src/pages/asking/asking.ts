@@ -46,7 +46,8 @@ export class AskingPage {
       tip: false,
       tipAmount: [""],
       goToSomewhere: false,
-      location: [""]
+      location: [""],
+      status: [""]
     });
 
   }
@@ -81,7 +82,8 @@ export class AskingPage {
         goToSomewhere: this.todo.value.goToSomewhere,
         location: this.todo.value.location,
         askedMail: askedMail,
-        askedUserId: askedUserId
+        askedUserId: askedUserId,
+        status: "asked"
       })
       .then(data => {
         this.navCtrl.pop();
