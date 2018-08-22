@@ -68,7 +68,7 @@ export class FavourPage {
   }
 
   dontDoIt(){
-    this.favour.status = 'asked';
+    this.favour.status = 'Asked';
     this.favour.doItUserId = "";
     this._DB.updateDocument("favours", this.favour.id, this.favour)
     .then(data => {
@@ -79,6 +79,23 @@ export class FavourPage {
       });
       alert.present();
       this.illGoToDoIt = false;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  declineOffer(){
+    this.favour.status = 'Asked';
+    this.favour.doItUserId = "";
+    this._DB.updateDocument("favours", this.favour.id, this.favour)
+    .then(data => {
+      const alert = this.alertCtrl.create({
+        title: 'Ok',
+        subTitle: 'Maybe other user can help you',
+        buttons: ['OK']
+      });
+      alert.present();
       })
       .catch(error => {
         console.log(error);

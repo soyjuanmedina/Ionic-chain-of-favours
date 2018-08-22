@@ -58,6 +58,7 @@ export class AskingPage {
   askAFavour() {
     let askedMail = localStorage.email ? localStorage.email : "";
     let askedUserId = localStorage.userId ? localStorage.userId : "";
+    let askedName = localStorage.name ? localStorage.name : "";
 
     let placeToGo =
       typeof this.todo.value.placeToGo === "undefined"
@@ -70,6 +71,7 @@ export class AskingPage {
 
     this._DB
       .addDocument("favours", {
+        askedName: askedName,
         title: this.todo.value.title,
         description: this.todo.value.description,
         expiration: this.todo.value.expiration,
@@ -81,7 +83,7 @@ export class AskingPage {
         location: this.todo.value.location,
         askedMail: askedMail,
         askedUserId: askedUserId,
-        status: "asked"
+        status: "Asked"
       })
       .then(data => {
         this.navCtrl.pop();

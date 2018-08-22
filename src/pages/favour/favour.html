@@ -47,8 +47,32 @@
         <ion-icon name="trash"></ion-icon>
         Delete favour
       </button>
+
+      <div *ngIf="favour.status == 'In progress'">
+
+        <button ion-button outline item-end icon-start (click)="chat()">
+            <ion-icon name="create" ></ion-icon>
+            Chat with the helper
+        </button>
+    
+        <button ion-button outline item-end icon-start color="danger" (click)="declineOffer()">
+            <ion-icon name="trash"></ion-icon>
+            Decline offer
+        </button>
+      </div>
     </div>
-    {{ favour.title }}
+
+
+
+
+    
+
+
+
+
+    <div>
+    Favour asked by {{favour.askedName}}
+    </div>
   <ion-card>
       <ion-card-header>
         <span *ngIf="editing"> You are editing this favour</span>
