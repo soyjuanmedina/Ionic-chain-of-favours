@@ -38,10 +38,12 @@
 
     <div *ngIf="itsMine">
 
-      <button ion-button outline item-end icon-start (click)="editFavour()">
-        <ion-icon name="create" ></ion-icon>
-        Edit favour
-      </button>
+        <div *ngIf="favour.status != 'In progress'">
+            <button ion-button outline item-end icon-start (click)="editFavour()">
+            <ion-icon name="create" ></ion-icon>
+            Edit favour
+            </button>
+        </div>
 
       <button ion-button outline item-end icon-start color="danger" (click)="deleteFavour()">
         <ion-icon name="trash"></ion-icon>
