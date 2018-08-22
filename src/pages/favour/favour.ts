@@ -67,6 +67,24 @@ export class FavourPage {
       }); 
   }
 
+  dontDoIt(){
+    this.favour.status = 'asked';
+    this.favour.doItUserId = "";
+    this._DB.updateDocument("favours", this.favour.id, this.favour)
+    .then(data => {
+      const alert = this.alertCtrl.create({
+        title: 'Tnaks',
+        subTitle: 'Maybe you can do other favor',
+        buttons: ['OK']
+      });
+      alert.present();
+      this.illGoToDoIt = false;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
   cancelEdition(){
     this.favour = this.uneditedFavour;
     this.editing = false;

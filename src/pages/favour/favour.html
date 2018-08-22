@@ -21,6 +21,11 @@
             <ion-icon name="checkmark-circle" ></ion-icon>
             Chat with the asker
         </button>
+
+        <button ion-button outline item-end icon-start (click)="dontDoIt()" color="danger">
+            <ion-icon name="checkmark-circle" ></ion-icon>
+            Don't do the favour
+        </button>
     </div>
     
     <div *ngIf="!itsMine && !illGoToDoIt">
