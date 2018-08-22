@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,3 +12,30 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+ion-col.my-thin-col {
+    flex: 0 0 35px;
+    padding: 0;
+    margin-right: 10px;
+}
+
+ion-content {
+    background: $secondary-color !important;
+}
+
+.form-box {
+    background: $primary-color;
+    padding: 20px 20px 0px 20px;
+    margin-top: 30px;
+}
+
+.submit-btn {
+    background: $secondary-color;
+    border-radius: 30px !important;
+    border: 1px solid #ffffff;
+}
+
+.white-text {
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+}

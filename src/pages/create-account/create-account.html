@@ -1,38 +1,70 @@
-<!--
-  Generated template for the CreateAccountPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
     <ion-navbar>
-        <ion-title>create-account</ion-title>
+        <ion-title>
+            <ion-row>
+                <ion-col class="my-thin-col">
+                    <img src="assets/imgs/logo-35.jpg" />
+                </ion-col>
+
+                <ion-col col-auto float-left>
+                    <div>CREATE_ACCOUNT</div>
+                </ion-col>
+
+            </ion-row>
+        </ion-title>
+
     </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content class="create-account-content" padding>
 
-    <form [formGroup]="userForm" (ngSubmit)="signin()">
-        <ion-item>
-            <ion-label floating>Name</ion-label>
-            <ion-input type="text" [(ngModel)]="userForm.name" formControlName="name"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Surname</ion-label>
-            <ion-input type="text" [(ngModel)]="userForm.surname" formControlName="surname"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Email</ion-label>
-            <ion-input type="text" [(ngModel)]="userForm.email" formControlName="email"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Password</ion-label>
-            <ion-input type="password" [(ngModel)]="userForm.password" formControlName="password"></ion-input>
-        </ion-item>
-        <button ion-button type="submit" [disabled]="!userForm.valid">Submit</button>
-    </form>
+    <div class="form-box">
+
+        <form [formGroup]="userForm" (ngSubmit)="signin()">
+
+            <p class="white-text">Create account</p>
+
+            <ion-row>
+                <ion-col>
+                    <ion-list inset>
+
+                        <ion-item>
+                            <ion-label floating>Name</ion-label>
+                            <ion-input type="text" [(ngModel)]="userForm.name" formControlName="name"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label floating>Surname</ion-label>
+                            <ion-input type="text" [(ngModel)]="userForm.surname" formControlName="surname"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label floating>Email</ion-label>
+                            <ion-input type="text" [(ngModel)]="userForm.email" formControlName="email"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label floating>Password</ion-label>
+                            <ion-input type="password" [(ngModel)]="userForm.password" formControlName="password"></ion-input>
+                        </ion-item>
+
+
+
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+
+
+            <ion-row>
+                <ion-col class="signup-col">
+                    <button ion-button class="submit-btn" full type="submit" [disabled]="!userForm.valid">Submit</button>
+                </ion-col>
+            </ion-row>
+
+
+
+
+        </form>
+    </div>
 
 </ion-content>

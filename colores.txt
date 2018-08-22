@@ -1,0 +1,2 @@
+Color primario: #0092d6
+Color secundario: 00bcf0
