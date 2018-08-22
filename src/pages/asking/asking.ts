@@ -49,12 +49,10 @@ export class AskingPage {
       location: [""],
       status: [""]
     });
-
   }
 
   setMyLocation() {
     this.todo.location = this.location;
-    
   }
 
   askAFavour() {
@@ -66,7 +64,7 @@ export class AskingPage {
         ? ""
         : this.todo.value.placeToGo;
 
-    if(!this.todo.value.goToSomewhere){
+    if (!this.todo.value.goToSomewhere) {
       this.todo.value.location = "";
     }
 
@@ -116,8 +114,9 @@ export class AskingPage {
   }
 
   ionViewDidLoad() {
-    this.coords.lat = this.navParams.get('lat');
-    this.coords.lng = this.navParams.get('lng');
+    console.log(this.coords);
+    this.coords.lat = this.navParams.get("lat");
+    this.coords.lng = this.navParams.get("lng");
     this.getAddress(this.coords).then(res => {
       this.location = res[1]["formatted_address"];
       this.todo.location = this.location;

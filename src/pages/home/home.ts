@@ -14,7 +14,6 @@ declare var localStorage: any;
 //Pages
 import { AskingPage } from "../asking/asking";
 import { FavourPage } from "../favour/favour";
-import { GivingPage } from "../giving/giving";
 import { LoginPage } from "../login/login";
 import { DatabaseProvider } from "../../providers/database/database";
 
@@ -23,7 +22,7 @@ import { DatabaseProvider } from "../../providers/database/database";
   templateUrl: "home.html"
 })
 export class HomePage {
-  user = {};
+  user: any;
   myFavours = [];
   favoursInMyLocation = [];
   favoursWithoutLocation = [];
@@ -56,28 +55,29 @@ export class HomePage {
           favour.id = documentSnapshot.id;
           favours.push(favour);
           //this.favores.push(favour);
-        })
+        });
         this.allFavours = favours;
-        
-        this.myFavours = this.allFavours.filter(function (favour) {
+
+        this.myFavours = this.allFavours.filter(function(favour) {
           return favour.askedMail == localStorage.email;
         });
-        this.favoursInMyLocation = this.allFavours.filter(function (favour) {
-          return favour.location == localStorage.location && favour.doItUserId != localStorage.userId && favour.askedMail != localStorage.email;
+        this.favoursInMyLocation = this.allFavours.filter(function(favour) {
+          return (
+            favour.location == localStorage.location &&
+            favour.doItUserId != localStorage.userId &&
+            favour.askedMail != localStorage.email
+          );
         });
-        this.favoursWithoutLocation = this.allFavours.filter(function (favour) {
-          return favour.location == "" && favour.doItUserId != localStorage.userId && favour.askedMail != localStorage.email;
+        this.favoursWithoutLocation = this.allFavours.filter(function(favour) {
+          return (
+            favour.location == "" &&
+            favour.doItUserId != localStorage.userId &&
+            favour.askedMail != localStorage.email
+          );
         });
-        this.favoursIllDo = this.allFavours.filter(function (favour) {
+        this.favoursIllDo = this.allFavours.filter(function(favour) {
           return favour.doItUserId == localStorage.userId;
         });
-
-        console.log('todos', this.allFavours);
-        console.log('mios', this.myFavours);
-        console.log('aqui', this.favoursInMyLocation);
-        console.log('sin location', this.favoursWithoutLocation);
-        console.log('que hare', this.favoursIllDo);
-      
       })
       .catch(error => {
         console.log(error);
@@ -92,7 +92,7 @@ export class HomePage {
         this.coords.lng = res.coords.longitude;
         this.getAddress(this.coords).then(res => {
           this.address = res[1]["formatted_address"];
-          localStorage.setItem('location', this.address);
+          localStorage.setItem("location", this.address);
         });
       })
       .catch(error => {
@@ -118,8 +118,9 @@ export class HomePage {
     this.translateService.use(lang);
   }
 
-  goToPage(page) {
-    this.navCtrl.push(page, this.coords);
+  askFavour() {
+    console.log(this.coords);
+    this.navCtrl.push(AskingPage, this.coords);
   }
 
   closeSesion() {
@@ -127,10 +128,9 @@ export class HomePage {
     this.navCtrl.setRoot(LoginPage);
   }
 
-  showFavour(favour){
+  showFavour(favour) {
     this.navCtrl.push(FavourPage, { favour });
   }
-
 
   ionViewWillEnter() {
     console.log(this.address);
@@ -139,6 +139,4 @@ export class HomePage {
       this.getAllFavours(localStorage.email);
     }
   }
-
-
 }
