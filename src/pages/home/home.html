@@ -1,96 +1,111 @@
 <ion-header>
     <ion-navbar>
+        <ion-buttons start (click)="closeSesion()">
+            <span>Close session</span><button> 
+            <ion-icon name="log-out"></ion-icon> 
+          </button>
+        </ion-buttons>
         <ion-title>
-            {{ 'APP_TITLE' | translate }}
+            <ion-row>
+                <ion-col class="my-thin-col">
+                    <img src="assets/imgs/logo-35.jpg" />
+                </ion-col>
+
+                <ion-col col-auto float-left>
+                    <div>Home</div>
+                </ion-col>
+
+            </ion-row>
         </ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <ion-card>
-        <ion-card-header>
-            <ion-item>
-                <ion-icon name="md-contact" item-start></ion-icon>
-                Wellcome <br>
-            </ion-item>
-        </ion-card-header>
-        <ion-card-content>
-            It's a great da¡'0ii to ask or do a favour
-        </ion-card-content>
-    </ion-card>
-    <ion-row>
-        <ion-col>
-            <button ion-button block (click)="closeSesion()">{{ 'CLOSE_SESSION' | translate }}</button>
-        </ion-col>
-    </ion-row>
 
+
+
+    <p class="primary-color-text center"><span class="uppercase">Wellcome {{ user?.name }}</span><br> It's a great day to ask or do a favour
+
+    </p>
+
+    <div *ngIf="myFavours?.length == 0">
+        <p class="primary-color-text">
+            You still don't ask any favour
+        </p>
+    </div>
     <div *ngIf="myFavours?.length > 0">
-        Favores que has pedido
+        <p class="primary-color-text">
+            Favours you ask
+        </p>
         <ion-list>
-            <ion-item *ngFor="let favour of myFavours; let i=index" (click)="showFavour(favour)">
-                <ion-avatar item-start>
-                    <img src="img/avatar-finn.png">
-                </ion-avatar>
+            <ion-item *ngFor="let favour of myFavours | slice:0:2; let i=index" (click)="showFavour(favour)" color="primary">
                 <h2>{{ favour.title }}</h2>
                 <h3>{{ favour.description }}</h3>
-                <p>{{ favour.id }}</p>
+                <p>Asked by {{ favour.askedName }}</p>
+            </ion-item>
+            <ion-item color="primary">
+                <ion-badge item-end color="secondary" *ngIf="myFavours?.length > 2" (click)="ShowAll(myFavours)">Show all</ion-badge>
             </ion-item>
         </ion-list>
     </div>
 
-    <div>
-        <button ion-button block (click)="askFavour()">Pedir un &nbsp; <span *ngIf="myFavours?.length > 0"> nuevo </span> &nbsp;favor</button>
-    </div>
-
-    <div *ngIf="myFavours?.length == 0">
-        Aún no has pedido ningún favor
-        <button ion-button block (click)="askFavour()">Pedir un favor</button>
+    <button ion-button icon-end round (click)="askFavour()">
+        Ask for a &nbsp; <span *ngIf="myFavours?.length > 0"> new </span> &nbsp;favour
+        <ion-icon name="add"></ion-icon>
+      </button>
 
 
 
-
-    </div>
 
 
     <div *ngIf="favoursIllDo?.length > 0">
-        Favores que vas a hacer
+
+        <p class="primary-color-text">
+            Favours you will do
+        </p>
         <ion-list>
-            <ion-item *ngFor="let favour of favoursIllDo; let i=index" (click)="showFavour(favour)">
-                <ion-avatar item-start>
-                    <img src="img/avatar-finn.png">
-                </ion-avatar>
+            <ion-item *ngFor="let favour of favoursIllDo | slice:0:2; let i=index" (click)="showFavour(favour)" color="primary">
                 <h2>{{ favour.title }}</h2>
                 <h3>{{ favour.description }}</h3>
-                <p>{{ favour.id }}</p>
+                <p>Asked by {{ favour.askedName }}</p>
+            </ion-item>
+            <ion-item color="primary">
+                <ion-badge item-end color="secondary" *ngIf="favoursIllDo?.length > 2">Show all</ion-badge>
             </ion-item>
         </ion-list>
+
     </div>
 
 
 
     <div *ngIf="favoursInMyLocation?.length > 0">
-        Favores en {{ address }}
+
+        <p class="primary-color-text">
+            Favours in {{ address }}
+        </p>
         <ion-list>
-            <ion-item *ngFor="let favour of favoursInMyLocation; let i=index" (click)="showFavour(favour)">
-                <ion-avatar item-start>
-                    <img src="img/avatar-finn.png">
-                </ion-avatar>
+            <ion-item *ngFor="let favour of favoursInMyLocation | slice:0:5; let i=index" (click)="showFavour(favour)" color="primary">
                 <h2>{{ favour.title }}</h2>
                 <h3>{{ favour.description }}</h3>
-                <p>{{ favour.id }}</p>
+                <p>Asked by {{ favour.askedName }}</p>
+            </ion-item>
+            <ion-item color="primary">
+                <ion-badge item-end color="secondary" *ngIf="favoursInMyLocation?.length > 5">Show all</ion-badge>
             </ion-item>
         </ion-list>
     </div>
 
     <div *ngIf="favoursWithoutLocation?.length > 0">
-        Favores sin localización
+        <p class="primary-color-text">
+            Favours without location
+        </p>
         <ion-list>
-            <ion-item *ngFor="let favour of favoursWithoutLocation; let i=index" (click)="showFavour(favour)">
-                <ion-avatar item-start>
-                    <img src="img/avatar-finn.png">
-                </ion-avatar>
+            <ion-item *ngFor="let favour of favoursWithoutLocation | slice:0:5; let i=index" (click)="showFavour(favour)" color="primary">
                 <h2>{{ favour.title }}</h2>
                 <h3>{{ favour.description }}</h3>
-                <p>{{ favour.id }}</p>
+                <p>Asked by {{ favour.askedName }}</p>
+            </ion-item>
+            <ion-item color="primary">
+                <ion-badge item-end color="secondary" *ngIf="favoursWithoutLocation?.length > 5">Show all</ion-badge>
             </ion-item>
         </ion-list>
     </div>

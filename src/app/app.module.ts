@@ -23,6 +23,7 @@ import { ChatPage } from "../pages/chat/chat";
 import { DatabaseProvider } from "../providers/database/database";
 
 import { AskingPageModule } from "../pages/asking/asking.module";
+import { ShowAllFavoursPageModule } from "../pages/show-all-favours/show-all-favours.module";
 import { CreateAccountPageModule } from "../pages/create-account/create-account.module";
 
 export const firebaseConfig = {
@@ -48,6 +49,7 @@ export function createTranslateLoader(http: HttpClient) {
     AngularFirestoreModule,
     CreateAccountPageModule,
     AskingPageModule,
+    ShowAllFavoursPageModule,
     AngularFireAuthModule,
     TranslateModule.forRoot({
       loader: {

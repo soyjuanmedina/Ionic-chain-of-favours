@@ -1,0 +1,25 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>showAllFavours</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <div>
+        <p class="primary-color-text">
+            Favours you ask
+        </p>
+        <ion-list>
+            <ion-item *ngFor="let favour of favoursArray let i=index" (click)="showFavour(favour)" color="primary">
+                <h2>{{ favour.title }}</h2>
+                <h3>{{ favour.description }}</h3>
+                <p>Asked by {{ favour.askedName }}</p>
+            </ion-item>
+        </ion-list>
+    </div>
+
+</ion-content>

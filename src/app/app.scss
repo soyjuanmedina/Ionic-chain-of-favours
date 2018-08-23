@@ -29,13 +29,23 @@ ion-content {
 }
 
 .submit-btn {
-    background: $secondary-color;
+    background: secondary;
     border-radius: 30px !important;
     border: 1px solid #ffffff;
 }
 
 .white-text {
-    color: #ffffff;
-    text-transform: uppercase;
+    color: white;
+}
+
+.primary-color-text {
+    color: $primary-color;
+}
+
+.center {
     text-align: center;
+}
+
+.uppercase {
+    text-transform: uppercase;
 }

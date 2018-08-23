@@ -14,6 +14,7 @@ declare var localStorage: any;
 //Pages
 import { AskingPage } from "../asking/asking";
 import { FavourPage } from "../favour/favour";
+import { ShowAllFavoursPage } from "../show-all-favours/show-all-favours";
 import { LoginPage } from "../login/login";
 import { DatabaseProvider } from "../../providers/database/database";
 
@@ -130,6 +131,10 @@ export class HomePage {
 
   showFavour(favour) {
     this.navCtrl.push(FavourPage, { favour });
+  }
+
+  ShowAll(favoursArray) {
+    this.navCtrl.push(ShowAllFavoursPage, { favoursArray });
   }
 
   ionViewWillEnter() {
