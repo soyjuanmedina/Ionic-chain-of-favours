@@ -16,6 +16,9 @@ import { AskingPage } from "../asking/asking";
 import { FavourPage } from "../favour/favour";
 import { ShowAllFavoursPage } from "../show-all-favours/show-all-favours";
 import { LoginPage } from "../login/login";
+import { UserProfilePage } from "../user-profile/user-profile";
+
+//Providers
 import { DatabaseProvider } from "../../providers/database/database";
 
 @Component({
@@ -129,16 +132,20 @@ export class HomePage {
     this.navCtrl.setRoot(LoginPage);
   }
 
+  viewProfile(userId) {
+    this.navCtrl.push(UserProfilePage, { userId });
+  }
+
   showFavour(favour) {
     this.navCtrl.push(FavourPage, { favour });
   }
 
   ShowAll(favoursArray) {
+    console.log(favoursArray);
     this.navCtrl.push(ShowAllFavoursPage, { favoursArray });
   }
 
   ionViewWillEnter() {
-    console.log(this.address);
     if (localStorage) {
       this.user = localStorage;
       this.getAllFavours(localStorage.email);

@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import * as _ from 'lodash';
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController
+} from "ionic-angular";
+import * as _ from "lodash";
 
 import { DatabaseProvider } from "../../providers/database/database";
 declare var localStorage: any;
@@ -16,8 +21,8 @@ import { ChatPage } from "../chat/chat";
 
 @IonicPage()
 @Component({
-  selector: 'page-favour',
-  templateUrl: 'favour.html',
+  selector: "page-favour",
+  templateUrl: "favour.html"
 })
 export class FavourPage {
   favour;
@@ -26,115 +31,122 @@ export class FavourPage {
   illGoToDoIt: boolean = false;
   editing: boolean = false;
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
     private _DB: DatabaseProvider,
-    public alertCtrl: AlertController) {
-      this.favour = this.navParams.get('favour');
-      this.uneditedFavour = _.clone(this.favour);
-      if(localStorage.userId == this.favour.askedUserId || localStorage.email == this.favour.askedMail){
-        this.itsMine = true;
-      }
-      if(localStorage.userId == this.favour.doItUserId){
-        this.illGoToDoIt = true;
-      }
+    public alertCtrl: AlertController
+  ) {
+    this.favour = this.navParams.get("favour");
+    this.uneditedFavour = _.clone(this.favour);
+    if (
+      localStorage.userId == this.favour.askedUserId ||
+      localStorage.email == this.favour.askedMail
+    ) {
+      this.itsMine = true;
+    }
+    if (localStorage.userId == this.favour.doItUserId) {
+      this.illGoToDoIt = true;
+    }
   }
 
-  editFavour(){
+  editFavour() {
     this.editing = true;
     console.log(this.favour);
   }
 
-  chat(){
+  chat() {
     this.navCtrl.push(ChatPage);
   }
 
-  doFavour(){
-    this.favour.status = 'In progress';
+  doFavour() {
+    this.favour.status = "In progress";
     this.favour.doItUserId = localStorage.userId;
-    this._DB.updateDocument("favours", this.favour.id, this.favour)
-    .then(data => {
-      const alert = this.alertCtrl.create({
-        title: 'Thanks for your help',
-        subTitle: 'Now you can chat with the asked user to concretate',
-        buttons: ['OK']
-      });
-      alert.present();
-      this.illGoToDoIt = true;
+    this._DB
+      .updateDocument("favours", this.favour.id, this.favour)
+      .then(data => {
+        const alert = this.alertCtrl.create({
+          title: "Thanks for your help",
+          subTitle: "Now you can chat with the asked user to concretate",
+          buttons: ["OK"]
+        });
+        alert.present();
+        this.illGoToDoIt = true;
       })
       .catch(error => {
         console.log(error);
-      }); 
+      });
   }
 
-  dontDoIt(){
-    this.favour.status = 'Asked';
+  dontDoIt() {
+    this.favour.status = "Asked";
     this.favour.doItUserId = "";
-    this._DB.updateDocument("favours", this.favour.id, this.favour)
-    .then(data => {
-      const alert = this.alertCtrl.create({
-        title: 'Tnaks',
-        subTitle: 'Maybe you can do other favor',
-        buttons: ['OK']
-      });
-      alert.present();
-      this.illGoToDoIt = false;
+    this._DB
+      .updateDocument("favours", this.favour.id, this.favour)
+      .then(data => {
+        const alert = this.alertCtrl.create({
+          title: "Tnaks",
+          subTitle: "Maybe you can do other favor",
+          buttons: ["OK"]
+        });
+        alert.present();
+        this.illGoToDoIt = false;
       })
       .catch(error => {
         console.log(error);
       });
   }
 
-  declineOffer(){
-    this.favour.status = 'Asked';
+  declineOffer() {
+    this.favour.status = "Asked";
     this.favour.doItUserId = "";
-    this._DB.updateDocument("favours", this.favour.id, this.favour)
-    .then(data => {
-      const alert = this.alertCtrl.create({
-        title: 'Ok',
-        subTitle: 'Maybe other user can help you',
-        buttons: ['OK']
-      });
-      alert.present();
+    this._DB
+      .updateDocument("favours", this.favour.id, this.favour)
+      .then(data => {
+        const alert = this.alertCtrl.create({
+          title: "Ok",
+          subTitle: "Maybe other user can help you",
+          buttons: ["OK"]
+        });
+        alert.present();
       })
       .catch(error => {
         console.log(error);
       });
   }
 
-  cancelEdition(){
+  cancelEdition() {
     this.favour = this.uneditedFavour;
     this.editing = false;
   }
 
-  deleteFavour(){
-    this._DB.deleteDocument("favours", this.favour.id)
-    .then(data => {
-      this.navCtrl.pop();
+  deleteFavour() {
+    this._DB
+      .deleteDocument("favours", this.favour.id)
+      .then(data => {
+        this.navCtrl.pop();
       })
       .catch(error => {
         console.log(error);
-      }); 
+      });
   }
 
-  updateFavour(){
+  updateFavour() {
     this.editing = false;
-    this._DB.updateDocument("favours", this.favour.id, this.favour)
-    .then(data => {
-      const alert = this.alertCtrl.create({
-        title: 'Correct update',
-        subTitle: 'Your favour have been updated',
-        buttons: ['OK']
-      });
-      alert.present();
+    this._DB
+      .updateDocument("favours", this.favour.id, this.favour)
+      .then(data => {
+        const alert = this.alertCtrl.create({
+          title: "Correct update",
+          subTitle: "Your favour have been updated",
+          buttons: ["OK"]
+        });
+        alert.present();
       })
       .catch(error => {
         console.log(error);
       });
   }
 
-  ionViewDidLoad() {
-    console.log(this.favour);
-  }
-
+  ionViewDidLoad() {}
 }

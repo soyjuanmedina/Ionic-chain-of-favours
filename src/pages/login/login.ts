@@ -71,5 +71,6 @@ export class LoginPage {
 
   setLanguage(lang) {
     this.translateService.use(lang);
+    localStorage.setItem("language", lang);
   }
 }

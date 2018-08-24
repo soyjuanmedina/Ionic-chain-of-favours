@@ -6,33 +6,51 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>{{ favour.title }}</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>{{ favour.title }}</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
 
+    <ion-list>
+
+        <ion-item class="form-box white-text">
+            <div class="center uppercase" *ngIf="itsMine">
+                {{ 'YOU_ARE_VIEWING_YOUR_FAVOUR'| translate}}
+            </div>
+            <div class="center uppercase" *ngIf="!itsMine">
+                {{ 'FAVOUR_ASKED_BY'| translate}}
+                <br> {{favour.askedName}}
+            </div><br>
+
+
+            <h2>{{ favour.title }}</h2>
+            <h3>{{ favour.description }}</h3>
+            <div>{{ 'ASKED_BY'| translate}} {{ favour.askedName }}</div>
+        </ion-item>
+    </ion-list>
+
     <div *ngIf="illGoToDoIt">
 
         <button ion-button outline item-end icon-start (click)="chat()">
             <ion-icon name="checkmark-circle" ></ion-icon>
-            Chat with the asker
+            {{ 'CHAT_WITH_ASKER'| translate}}
         </button>
 
         <button ion-button outline item-end icon-start (click)="dontDoIt()" color="danger">
             <ion-icon name="checkmark-circle" ></ion-icon>
-            Don't do the favour
+            {{ 'DONT_DO_THE_FAVOUR'| translate}}
         </button>
     </div>
-    
+
     <div *ngIf="!itsMine && !illGoToDoIt">
 
         <button ion-button outline item-end icon-start (click)="doFavour()">
             <ion-icon name="checkmark-circle" ></ion-icon>
-            Do this favour
+            {{ 'DO_THIS_FAVOUR'| translate}}
         </button>
     </div>
 
@@ -41,97 +59,97 @@
         <div *ngIf="favour.status != 'In progress'">
             <button ion-button outline item-end icon-start (click)="editFavour()">
             <ion-icon name="create" ></ion-icon>
-            Edit favour
+            {{ 'EDIT_FAVOUR'| translate}}
             </button>
         </div>
 
-      <button ion-button outline item-end icon-start color="danger" (click)="deleteFavour()">
+        <button ion-button outline item-end icon-start color="danger" (click)="deleteFavour()">
         <ion-icon name="trash"></ion-icon>
-        Delete favour
+        {{ 'DELETE_FAVOUR'| translate}}
       </button>
 
-      <div *ngIf="favour.status == 'In progress'">
+        <div *ngIf="favour.status == 'In progress'">
 
-        <button ion-button outline item-end icon-start (click)="chat()">
+            <button ion-button outline item-end icon-start (click)="chat()">
             <ion-icon name="create" ></ion-icon>
-            Chat with the helper
+            {{ 'CHAT_WITH_HELPER'| translate}}
         </button>
-    
-        <button ion-button outline item-end icon-start color="danger" (click)="declineOffer()">
+
+            <button ion-button outline item-end icon-start color="danger" (click)="declineOffer()">
             <ion-icon name="trash"></ion-icon>
-            Decline offer
+            {{ 'DECLINE_OFFER'| translate}}
         </button>
-      </div>
+        </div>
     </div>
 
 
 
 
-    
+
 
 
 
 
     <div>
-    Favour asked by {{favour.askedName}}
+        {{ 'FAVOUR_ASKED_BY'| translate}} {{favour.askedName}}
     </div>
-  <ion-card>
-      <ion-card-header>
-        <span *ngIf="editing"> You are editing this favour</span>
-      </ion-card-header>
-      <ion-card-content>
-            <div  *ngIf="editing">
-              Title:
-             <ion-input type="text"[(ngModel)]="favour.title"></ion-input>
+    <ion-card>
+        <ion-card-header>
+            <span *ngIf="editing"> {{ 'YOU_ARE_EDITING'| translate}}</span>
+        </ion-card-header>
+        <ion-card-content>
+            <div *ngIf="editing">
+                {{ 'TITLE'| translate}}:
+                <ion-input type="text" [(ngModel)]="favour.title"></ion-input>
             </div>
             <div>
-              Description: <span *ngIf="!editing">{{ favour.description }}</span>
-              <ion-input  *ngIf="editing" type="text"[(ngModel)]="favour.description"></ion-input>
+                {{ 'DESCRIPTION'| translate}}: <span *ngIf="!editing">{{ favour.description }}</span>
+                <ion-input *ngIf="editing" type="text" [(ngModel)]="favour.description"></ion-input>
             </div>
 
-             <hr/>
-             <div *ngIf="!editing">
+            <hr/>
+            <div *ngIf="!editing">
                 <p>
-                    Usefull information
-                 </p>
-                 <div *ngIf="favour.expiration">
+                    {{ 'USERFULL_INFORMATION'| translate}}
+                </p>
+                <div *ngIf="favour.expiration">
                     <p *ngIf="favour.expirationDate">
-                        expirationDate: {{ favour.expirationDate }}
+                        {{ 'LAST_DAY_TO_DO_IT'| translate}}: {{ favour.expirationDate }}
                     </p>
                     <p *ngIf="favour.expirationHour">
-                        expirationHour: {{ favour.expirationHour }}
+                        {{ 'LAST_HOUR_TO_DO_IT'| translate}}: {{ favour.expirationHour }}
                     </p>
                 </div>
-                 <p *ngIf="favour.tip">
+                <p *ngIf="favour.tip">
                     tipAmount: {{ favour.tipAmount }}
-                 </p>
-                 <p *ngIf="favour.location">
-                    location: {{ favour.location }}
-                 </p>
-             </div>
-             
+                </p>
+                <p *ngIf="favour.location">
+                    {{ 'LOCATION'| translate}}: {{ favour.location }}
+                </p>
+            </div>
+
             <div *ngIf="editing">
                 <ion-item>
-                    <ion-label>The favour has deadline</ion-label>
+                    <ion-label>{{ 'FAVOUR_HAS_DEADLINE'| translate}}</ion-label>
                     <ion-toggle [(ngModel)]="favour.expiration"></ion-toggle>
                 </ion-item>
                 <ion-list *ngIf="favour.expiration">
                     <ion-item>
-                        <ion-label floating>Last Date</ion-label>
+                        <ion-label floating>{{ 'LAST_DAY_TO_DO_IT'| translate}}</ion-label>
                         <ion-datetime displayFormat="DD MM YYYY" [(ngModel)]="favour.expirationDate"></ion-datetime>
                     </ion-item>
                     <ion-item>
-                        <ion-label floating>Last Hour</ion-label>
+                        <ion-label floating>{{ 'LAST_HOUR_TO_DO_IT'| translate}}</ion-label>
                         <ion-datetime displayFormat="h:mm A" pickerFormat="h mm A" [(ngModel)]="favour.expirationHour"></ion-datetime>
                     </ion-item>
                 </ion-list>
 
                 <ion-item>
-                    <ion-label>Do you want offer a tip?</ion-label>
+                    <ion-label>{{ 'OFFER_TIP'| translate}}</ion-label>
                     <ion-toggle [(ngModel)]="favour.tip"></ion-toggle>
                 </ion-item>
                 <ion-item *ngIf="favour.tip">
-                    <ion-label>Tip amount: {{favour.tipAmount}} €</ion-label>
+                    <ion-label>{{ 'TIP_AMOUNT'| translate}}: {{favour.tipAmount}} €</ion-label>
                     <ion-range min="1" max="10" pin="true" [(ngModel)]="favour.tipAmount">
                         <ion-label range-left>1 €</ion-label>
                         <ion-label range-right>10 €</ion-label>
@@ -139,22 +157,22 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label>Location favour?</ion-label>
+                    <ion-label>{{ 'LOCATION_FAVOUR'| translate}}</ion-label>
                     <ion-toggle [(ngModel)]="favour.goToSomewhere"></ion-toggle>
                 </ion-item>
 
                 <div [hidden]="!favour.goToSomewhere">
                     <ion-item>
-                        <ion-label floating>Location</ion-label>
+                        <ion-label floating>{{ 'LOCATION'| translate}}</ion-label>
                         <ion-input disabled="true" type="text" [(ngModel)]="favour.location"></ion-input>
                     </ion-item>
 
                     <div id="map"></div>
                 </div>
 
-              <button ion-button (click)="updateFavour()">Update favour</button>
-              <button ion-button (click)="cancelEdition()">Cancel</button>
+                <button ion-button (click)="updateFavour()">{{ 'UPDATE_FAVOUR'| translate}}</button>
+                <button ion-button (click)="cancelEdition()">{{ 'CANCEL'| translate}}</button>
             </div>
-      </ion-card-content>
-  </ion-card>
+        </ion-card-content>
+    </ion-card>
 </ion-content>

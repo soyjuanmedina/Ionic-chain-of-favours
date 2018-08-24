@@ -19,6 +19,7 @@ import { AuthProvider } from "../providers/auth/auth";
 import { LoginPage } from "../pages/login/login";
 import { HomePage } from "../pages/home/home";
 import { FavourPage } from "../pages/favour/favour";
+import { UserProfilePage } from "../pages/user-profile/user-profile";
 import { ChatPage } from "../pages/chat/chat";
 import { DatabaseProvider } from "../providers/database/database";
 
@@ -40,7 +41,14 @@ export function createTranslateLoader(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [MyApp, LoginPage, HomePage, FavourPage, ChatPage],
+  declarations: [
+    MyApp,
+    LoginPage,
+    HomePage,
+    FavourPage,
+    ChatPage,
+    UserProfilePage
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -60,7 +68,14 @@ export function createTranslateLoader(http: HttpClient) {
     })
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, LoginPage, HomePage, FavourPage, ChatPage],
+  entryComponents: [
+    MyApp,
+    LoginPage,
+    HomePage,
+    FavourPage,
+    ChatPage,
+    UserProfilePage
+  ],
   providers: [
     StatusBar,
     SplashScreen,

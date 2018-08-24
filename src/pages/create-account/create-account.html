@@ -8,7 +8,7 @@
                 </ion-col>
 
                 <ion-col col-auto float-left>
-                    <div>Register</div>
+                    <div>{{ 'REGISTER'| translate}}</div>
                 </ion-col>
 
             </ion-row>
@@ -25,26 +25,26 @@
 
         <form [formGroup]="userForm" (ngSubmit)="signin()">
 
-            <p class="white-text center uppercase">Create account</p>
+            <p class="white-text center uppercase">{{ 'CREATE_ACCOUNT'| translate}}</p>
 
             <ion-row>
                 <ion-col>
                     <ion-list inset>
 
                         <ion-item>
-                            <ion-label floating>Name</ion-label>
+                            <ion-label floating>{{ 'NAME'| translate}}</ion-label>
                             <ion-input type="text" [(ngModel)]="userForm.name" formControlName="name"></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-label floating>Surname</ion-label>
+                            <ion-label floating>{{ 'SURNAME'| translate}}</ion-label>
                             <ion-input type="text" [(ngModel)]="userForm.surname" formControlName="surname"></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-label floating>Email</ion-label>
+                            <ion-label floating>{{ 'EMAIL'| translate}}</ion-label>
                             <ion-input type="text" [(ngModel)]="userForm.email" formControlName="email"></ion-input>
                         </ion-item>
                         <ion-item>
-                            <ion-label floating>Password</ion-label>
+                            <ion-label floating>{{ 'PASSWORD'| translate}}</ion-label>
                             <ion-input type="password" [(ngModel)]="userForm.password" formControlName="password"></ion-input>
                         </ion-item>
 
@@ -57,7 +57,7 @@
 
             <ion-row>
                 <ion-col class="signup-col">
-                    <button ion-button class="submit-btn" full type="submit" [disabled]="!userForm.valid">Submit</button>
+                    <button ion-button class="submit-btn" full type="submit" [disabled]="!userForm.valid">{{ 'SUBMIT'| translate}}</button>
                 </ion-col>
             </ion-row>
 

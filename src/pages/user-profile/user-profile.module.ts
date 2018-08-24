@@ -1,13 +1,13 @@
 import { NgModule } from "@angular/core";
 import { IonicPageModule } from "ionic-angular";
-import { ShowAllFavoursPage } from "./show-all-favours";
+import { UserProfilePage } from "./user-profile";
 import { TranslateModule } from "@ngx-translate/core";
 
 @NgModule({
-  declarations: [ShowAllFavoursPage],
+  declarations: [UserProfilePage],
   imports: [
-    IonicPageModule.forChild(ShowAllFavoursPage),
+    IonicPageModule.forChild(UserProfilePage),
     TranslateModule.forChild()
   ]
 })
-export class ShowAllFavoursPageModule {}
+export class UserProfilePageModule {}

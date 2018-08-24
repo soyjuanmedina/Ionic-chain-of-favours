@@ -18,6 +18,7 @@ export class AuthProvider {
     return this.afAuth.auth
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(res => {
+        delete data.password;
         this._DB
           .addDocument("users", data)
           .then(data => {})
@@ -37,7 +38,7 @@ export class AuthProvider {
           .getDocumentsByQuery("users", "email", "==", email)
           .then(data => {
             data.forEach(function(documentSnapshot) {
-              localStorage.setItem("userId", documentSnapshot.id)
+              localStorage.setItem("userId", documentSnapshot.id);
               var document = documentSnapshot.data();
               for (var key in document) {
                 localStorage.setItem(key, document[key]);

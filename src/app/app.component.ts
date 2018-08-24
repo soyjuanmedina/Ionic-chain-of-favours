@@ -28,9 +28,11 @@ export class MyApp {
     platform.ready().then(() => {
       if (localStorage.email) {
         this.rootPage = HomePage;
-        console.log("hay localStorage.email");
       } else {
         this.rootPage = LoginPage;
+      }
+      if (localStorage.language) {
+        this.translateService.use(localStorage.language);
       }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
