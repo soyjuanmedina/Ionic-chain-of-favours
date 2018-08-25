@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 
 import { DatabaseProvider } from "../../providers/database/database";
 
+import { LoadingController } from "ionic-angular";
+
 /**
  * Generated class for the UserProfilePage page.
  *
@@ -23,12 +25,17 @@ export class UserProfilePage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private _DB: DatabaseProvider
+    private _DB: DatabaseProvider,
+    public loadingCtrl: LoadingController
   ) {
     this.userId = this.navParams.get("userId");
     if (localStorage.userId == this.userId) {
       this.itsMine = true;
     }
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
     this._DB
       .getDocument("users", this.userId)
       .then(documentSnapshot => {
@@ -42,6 +49,7 @@ export class UserProfilePage {
       .catch(error => {
         console.log(error);
       });
+    loader.dismiss();
   }
 
   ionViewDidLoad() {

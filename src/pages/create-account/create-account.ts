@@ -1,8 +1,19 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { AuthProvider } from '../../providers/auth/auth';
+import { Component } from "@angular/core";
+import {
+  IonicPage,
+  NavController,
+  NavParams,
+  AlertController
+} from "ionic-angular";
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder
+} from "@angular/forms";
+import { AuthProvider } from "../../providers/auth/auth";
 
+import { LoadingController } from "ionic-angular";
 
 /**
  * Generated class for the CreateAccountPage page.
@@ -12,54 +23,61 @@ import { AuthProvider } from '../../providers/auth/auth';
  */
 
 @Component({
-  selector: 'page-create-account',
-  templateUrl: 'create-account.html',
+  selector: "page-create-account",
+  templateUrl: "create-account.html"
 })
 export class CreateAccountPage {
+  userForm: any;
 
-  userForm : any;
-
-  constructor(public navCtrl: NavController, 
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
     public auth: AuthProvider,
     public alertCtrl: AlertController,
-    private formBuilder: FormBuilder) {
-      this.userForm = this.formBuilder.group({
-        name: ['', Validators.required],
-        surname: [''],
-        email: ['', Validators.required],
-        password: ['', Validators.required]
-      });
-
+    private formBuilder: FormBuilder,
+    public loadingCtrl: LoadingController
+  ) {
+    this.userForm = this.formBuilder.group({
+      name: ["", Validators.required],
+      surname: [""],
+      email: ["", Validators.required],
+      password: ["", Validators.required]
+    });
   }
 
-  ionViewDidLoad() {
-  }
+  ionViewDidLoad() {}
 
   signin() {
-    this.auth.registerUser(this.userForm.value)
-      .then((user) => {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
+    this.auth
+      .registerUser(this.userForm.value)
+      .then(user => {
         let alert = this.alertCtrl.create({
-          title: 'Account create',
-          subTitle: 'Your account has been sucessfully create. Now you can login',
+          title: "Account create",
+          subTitle:
+            "Your account has been sucessfully create. Now you can login",
           buttons: [
             {
-              text: 'Acept',
+              text: "Acept",
               handler: () => {
                 this.navCtrl.pop();
               }
-            }]
+            }
+          ]
         });
         alert.present();
       })
       .catch(err => {
         let alert = this.alertCtrl.create({
-          title: 'Error',
+          title: "Error",
           subTitle: err.message,
-          buttons: ['Acept']
+          buttons: ["Acept"]
         });
         alert.present();
-      })
+      });
+    loader.dismiss();
   }
-
 }

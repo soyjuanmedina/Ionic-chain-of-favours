@@ -11,6 +11,8 @@ import { Platform } from "ionic-angular";
 declare var google: any;
 declare var localStorage: any;
 
+import { LoadingController } from "ionic-angular";
+
 //Pages
 import { AskingPage } from "../asking/asking";
 import { FavourPage } from "../favour/favour";
@@ -34,6 +36,7 @@ export class HomePage {
   allFavours = [];
   coords: any = { lat: 0, lng: 0 };
   address: string;
+  idioms: any;
 
   constructor(
     public navCtrl: NavController,
@@ -41,8 +44,20 @@ export class HomePage {
     public translateService: TranslateService,
     public platform: Platform,
     private geolocation: Geolocation,
-    private _DB: DatabaseProvider
+    private _DB: DatabaseProvider,
+    public loadingCtrl: LoadingController
   ) {
+    this.idioms = [
+      {
+        value: "es",
+        label: "SPANISH"
+      },
+      {
+        value: "en",
+        label: "ENGLISH"
+      }
+    ];
+
     platform.ready().then(() => {
       // La plataforma esta lista y ya tenemos acceso a los plugins.
       this.getLocation();
@@ -50,6 +65,10 @@ export class HomePage {
   }
 
   getAllFavours(email) {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
     this._DB
       .getDocuments("favours")
       .then(data => {
@@ -58,10 +77,8 @@ export class HomePage {
           let favour = documentSnapshot.data();
           favour.id = documentSnapshot.id;
           favours.push(favour);
-          //this.favores.push(favour);
         });
         this.allFavours = favours;
-
         this.myFavours = this.allFavours.filter(function(favour) {
           return favour.askedMail == localStorage.email;
         });
@@ -69,14 +86,16 @@ export class HomePage {
           return (
             favour.location == localStorage.location &&
             favour.doItUserId != localStorage.userId &&
-            favour.askedMail != localStorage.email
+            favour.askedMail != localStorage.email &&
+            favour.status == "Asked"
           );
         });
         this.favoursWithoutLocation = this.allFavours.filter(function(favour) {
           return (
             favour.location == "" &&
             favour.doItUserId != localStorage.userId &&
-            favour.askedMail != localStorage.email
+            favour.askedMail != localStorage.email &&
+            favour.status == "Asked"
           );
         });
         this.favoursIllDo = this.allFavours.filter(function(favour) {
@@ -86,6 +105,7 @@ export class HomePage {
       .catch(error => {
         console.log(error);
       });
+    loader.dismiss();
   }
 
   getLocation(): any {

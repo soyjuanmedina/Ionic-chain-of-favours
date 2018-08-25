@@ -19,7 +19,7 @@
 
         <p class="white-text center uppercase" *ngIf="itsMine">{{ 'YOU_ARE_VIEWING_YOUR_PROFILE'| translate}}</p>
 
-        <p class="white-text center uppercase" *ngIf="!itsMine">{{ 'YOU_ARE_VIEWING_THE_PROFILE_OF'| translate}}</p>
+        <p class="white-text center uppercase" *ngIf="!itsMine">{{ 'YOU_ARE_VIEWING_THE_PROFILE_OF'| translate}} {{ user.name }}</p>
 
         <ion-item>
             <ion-label floating>{{ 'NAME'| translate}}</ion-label>

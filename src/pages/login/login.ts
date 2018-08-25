@@ -70,6 +70,7 @@ export class LoginPage {
   }
 
   setLanguage(lang) {
+    console.log(lang);
     this.translateService.use(lang);
     localStorage.setItem("language", lang);
   }

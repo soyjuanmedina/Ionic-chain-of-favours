@@ -18,8 +18,11 @@ ion-col.my-thin-col {
     margin-right: 10px;
 }
 
-ion-content {
-    background: $secondary-color !important;
+ion-content {}
+
+.background-primary-color {
+    background: $primary-color;
+    color: #fff;
 }
 
 .form-box {
@@ -29,17 +32,21 @@ ion-content {
 }
 
 .submit-btn {
-    background: secondary;
+    background: $secondary-color;
     border-radius: 30px !important;
     border: 1px solid #ffffff;
 }
 
 .white-text {
-    color: white;
+    color: white !important;
 }
 
 .primary-color-text {
     color: $primary-color;
+}
+
+.danger-color {
+    background: red !important;
 }
 
 .center {
@@ -48,4 +55,18 @@ ion-content {
 
 .uppercase {
     text-transform: uppercase;
+}
+
+.text-on-bottom>.button-inner {
+    flex-direction: column;
+}
+
+.option-button {
+    color: white;
+    padding: 5px;
+    max-width: 75px;
+    margin-top: 10px;
+    background: $primary-color;
+    height: 70px;
+    vertical-align: top;
 }

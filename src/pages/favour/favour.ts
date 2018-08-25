@@ -12,6 +12,9 @@ declare var localStorage: any;
 
 import { ChatPage } from "../chat/chat";
 
+import { LoadingController } from "ionic-angular";
+import { UserProfilePage } from "../user-profile/user-profile";
+
 /**
  * Generated class for the FavourPage page.
  *
@@ -35,7 +38,8 @@ export class FavourPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private _DB: DatabaseProvider,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController
   ) {
     this.favour = this.navParams.get("favour");
     this.uneditedFavour = _.clone(this.favour);
@@ -60,8 +64,13 @@ export class FavourPage {
   }
 
   doFavour() {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
     this.favour.status = "In progress";
     this.favour.doItUserId = localStorage.userId;
+    this.favour.doItUserName = localStorage.name;
     this._DB
       .updateDocument("favours", this.favour.id, this.favour)
       .then(data => {
@@ -76,9 +85,14 @@ export class FavourPage {
       .catch(error => {
         console.log(error);
       });
+    loader.dismiss();
   }
 
   dontDoIt() {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
     this.favour.status = "Asked";
     this.favour.doItUserId = "";
     this._DB
@@ -95,11 +109,17 @@ export class FavourPage {
       .catch(error => {
         console.log(error);
       });
+    loader.dismiss();
   }
 
   declineOffer() {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
     this.favour.status = "Asked";
     this.favour.doItUserId = "";
+    this.favour.doItUserName = "";
     this._DB
       .updateDocument("favours", this.favour.id, this.favour)
       .then(data => {
@@ -113,6 +133,7 @@ export class FavourPage {
       .catch(error => {
         console.log(error);
       });
+    loader.dismiss();
   }
 
   cancelEdition() {
@@ -121,6 +142,10 @@ export class FavourPage {
   }
 
   deleteFavour() {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
     this._DB
       .deleteDocument("favours", this.favour.id)
       .then(data => {
@@ -129,9 +154,14 @@ export class FavourPage {
       .catch(error => {
         console.log(error);
       });
+    loader.dismiss();
   }
 
   updateFavour() {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
     this.editing = false;
     this._DB
       .updateDocument("favours", this.favour.id, this.favour)
@@ -146,6 +176,11 @@ export class FavourPage {
       .catch(error => {
         console.log(error);
       });
+    loader.dismiss();
+  }
+
+  viewProfile(userId) {
+    this.navCtrl.push(UserProfilePage, { userId });
   }
 
   ionViewDidLoad() {}
