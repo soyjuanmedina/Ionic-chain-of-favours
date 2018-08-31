@@ -62,12 +62,11 @@ export class FinishFavourPage {
       });
 
     //Actualizamos el usuario con su valoración
-    if (this.thanksForm.rate) {
-      this.doItUser.rate.push(this.thanksForm.rate);
-    }
-    if (this.thanksForm.comments) {
-      this.doItUser.comments.push(this.thanksForm.comments);
-    }
+    let assessment = {};
+    this.thanksForm.rate ? assessment.rate = this.thanksForm.rate : assessment.rate = "";
+    this.thanksForm.comments ? assessment.comments = this.thanksForm.comments : assessment.comments = "";
+    this.doItUser.assessments ? this.doItUser.assessments.push(assessment) :  this.doItUser.assessments = [ assessment ];
+    this.doItUser.averageRate ? this.doItUser.averageRate = (this.doItUser.averageRate + this.thanksForm.rate) / 2 :  this.doItUser.averageRate = this.thanksForm.rate;
     this._DB
       .updateDocument("users", this.favour.doItUserId, this.doItUser)
       .then(data => {
