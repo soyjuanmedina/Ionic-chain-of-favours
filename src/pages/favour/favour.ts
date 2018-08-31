@@ -11,6 +11,7 @@ import { DatabaseProvider } from "../../providers/database/database";
 declare var localStorage: any;
 
 import { ChatPage } from "../chat/chat";
+import { FinishFavourPage } from "../finish-favour/finish-favour";
 
 import { LoadingController } from "ionic-angular";
 import { UserProfilePage } from "../user-profile/user-profile";
@@ -134,6 +135,11 @@ export class FavourPage {
         console.log(error);
       });
     loader.dismiss();
+  }
+
+  finishFavour() {
+    let favour = this.favour;
+    this.navCtrl.push(FinishFavourPage, { favour });
   }
 
   cancelEdition() {

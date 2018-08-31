@@ -1,0 +1,62 @@
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>
+            <ion-row>
+                <ion-col class="my-thin-col">
+                    <img src="assets/imgs/logo-35.jpg" />
+                </ion-col>
+
+                <ion-col col-auto float-left>
+                    <div>{{ 'SAY_THANKS'| translate}}</div>
+                </ion-col>
+
+            </ion-row>
+        </ion-title>
+
+    </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="finish-favour-content" padding>
+
+    <div class="form-box">
+
+        <form [formGroup]="thanksForm" (ngSubmit)="valorateFavour()">
+
+            <p class="white-text center uppercase">{{ 'SAY_THANKS_TO'| translate}} {{doItUser?.doItUserName}} {{ 'VALUINT_AND_COMMENTING'| translate}} </p>
+
+            <ion-row>
+                <ion-col>
+                    <ion-list inset>
+
+
+                        <ion-label class="white-text">{{ 'VALUE_THE_HELP'| translate}}</ion-label>
+                        <rating [(ngModel)]="thanksForm.rate" formControlName="rate" max="5">
+                        </rating>
+
+                        <ion-item class="height-150">
+                            <ion-label floating>{{ 'COMMENTS'| translate}}</ion-label>
+                            <ion-input type="text" [(ngModel)]="thanksForm.comments" formControlName="comments"></ion-input>
+                        </ion-item>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-col class="signup-col">
+                    <button ion-button class="submit-btn" full type="submit">{{ 'CLOSE_FAVOUR'| translate}}</button>
+                </ion-col>
+            </ion-row>
+
+
+
+
+
+
+
+        </form>
+    </div>
+
+</ion-content>

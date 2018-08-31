@@ -19,6 +19,8 @@ export class AuthProvider {
       .createUserWithEmailAndPassword(data.email, data.password)
       .then(res => {
         delete data.password;
+        data.comments = [];
+        data.rate = [];
         this._DB
           .addDocument("users", data)
           .then(data => {})

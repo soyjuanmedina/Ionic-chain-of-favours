@@ -15,13 +15,20 @@ import { AngularFireAuthModule } from "angularfire2/auth";
 
 import { MyApp } from "./app.component";
 
+// Pages
 import { AuthProvider } from "../providers/auth/auth";
 import { LoginPage } from "../pages/login/login";
 import { HomePage } from "../pages/home/home";
 import { FavourPage } from "../pages/favour/favour";
 import { UserProfilePage } from "../pages/user-profile/user-profile";
 import { ChatPage } from "../pages/chat/chat";
+import { FinishFavourPage } from "../pages/finish-favour/finish-favour";
+
+//Providers
 import { DatabaseProvider } from "../providers/database/database";
+
+// Import ionic2-rating module
+import { Ionic2RatingModule } from "ionic2-rating";
 
 import { AskingPageModule } from "../pages/asking/asking.module";
 import { ShowAllFavoursPageModule } from "../pages/show-all-favours/show-all-favours.module";
@@ -47,7 +54,8 @@ export function createTranslateLoader(http: HttpClient) {
     HomePage,
     FavourPage,
     ChatPage,
-    UserProfilePage
+    UserProfilePage,
+    FinishFavourPage
   ],
   imports: [
     BrowserModule,
@@ -59,6 +67,7 @@ export function createTranslateLoader(http: HttpClient) {
     AskingPageModule,
     ShowAllFavoursPageModule,
     AngularFireAuthModule,
+    Ionic2RatingModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,7 +83,8 @@ export function createTranslateLoader(http: HttpClient) {
     HomePage,
     FavourPage,
     ChatPage,
-    UserProfilePage
+    UserProfilePage,
+    FinishFavourPage
   ],
   providers: [
     StatusBar,

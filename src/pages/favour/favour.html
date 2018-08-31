@@ -58,11 +58,17 @@
           {{ 'CHAT_WITH_HELPER'| translate}}
         </button>
 
+        <button class="option-button" (click)="finishFavour()" *ngIf="itsMine && favour.status == 'In progress'">
+          <ion-icon name="happy"></ion-icon>
+          <br>
+          {{ favour?.doItUserName}} {{ 'FINISH_THE_FAVOUR'| translate}} 
+        </button>
+
         <button class="danger-color option-button" (click)="declineOffer()" *ngIf="itsMine && favour.status == 'In progress'">
-            <ion-icon name="sad"></ion-icon>
-            <br>
-            {{ 'DECLINE_OFFER'| translate}}
-          </button>
+          <ion-icon name="sad"></ion-icon>
+          <br>
+          {{ 'DECLINE_OFFER'| translate}}
+        </button>
 
         <button class="option-button" (click)="chat()" *ngIf="illGoToDoIt">
               <ion-icon name="chatbubbles"></ion-icon>

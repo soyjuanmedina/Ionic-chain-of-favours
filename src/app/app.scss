@@ -25,6 +25,11 @@ ion-content {}
     color: #fff;
 }
 
+.background-secondary-color {
+    background: $secondary-color !important;
+    color: #fff;
+}
+
 .form-box {
     background: $primary-color;
     padding: 20px 20px 0px 20px;
@@ -69,4 +74,12 @@ ion-content {}
     background: $primary-color;
     height: 70px;
     vertical-align: top;
+}
+
+.height-150 {
+    height: 150px;
+}
+
+.font-small {
+    font-size: 9px;
 }
