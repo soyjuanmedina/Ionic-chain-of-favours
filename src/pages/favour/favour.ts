@@ -69,7 +69,7 @@ export class FavourPage {
       content: "Please wait..."
     });
     loader.present();
-    this.favour.status = "In progress";
+    this.favour.status = "2-Progress";
     this.favour.doItUserId = localStorage.userId;
     this.favour.doItUserName = localStorage.name;
     this._DB
@@ -94,7 +94,7 @@ export class FavourPage {
       content: "Please wait..."
     });
     loader.present();
-    this.favour.status = "Asked";
+    this.favour.status = "1-Asked";
     this.favour.doItUserId = "";
     this._DB
       .updateDocument("favours", this.favour.id, this.favour)
@@ -118,7 +118,7 @@ export class FavourPage {
       content: "Please wait..."
     });
     loader.present();
-    this.favour.status = "Asked";
+    this.favour.status = "1-Asked";
     this.favour.doItUserId = "";
     this.favour.doItUserName = "";
     this._DB

@@ -51,7 +51,7 @@ export class FinishFavourPage {
       content: "Please wait..."
     });
     loader.present();
-    this.favour.status = "Finished";
+    this.favour.status = "3-Finished";
     this.favour.finishedDate = Date.now();
     this._DB
       .updateDocument("favours", this.favour.id, this.favour)

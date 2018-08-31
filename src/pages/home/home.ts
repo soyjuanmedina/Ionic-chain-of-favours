@@ -1,6 +1,7 @@
 import { importExpr } from "@angular/compiler/src/output/output_ast";
 import { Component } from "@angular/core";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
+import * as _ from "lodash";
 
 import { TranslateService } from "@ngx-translate/core";
 
@@ -82,12 +83,14 @@ export class HomePage {
         this.myFavours = this.allFavours.filter(function(favour) {
           return favour.askedMail == localStorage.email;
         });
+        this.myFavours = _.orderBy(this.myFavours, ["status"], ["asc"]);
+        console.log(this.myFavours);
         this.favoursInMyLocation = this.allFavours.filter(function(favour) {
           return (
             favour.location == localStorage.location &&
             favour.doItUserId != localStorage.userId &&
             favour.askedMail != localStorage.email &&
-            favour.status == "Asked"
+            favour.status == "1-Asked"
           );
         });
         this.favoursWithoutLocation = this.allFavours.filter(function(favour) {
@@ -95,12 +98,13 @@ export class HomePage {
             favour.location == "" &&
             favour.doItUserId != localStorage.userId &&
             favour.askedMail != localStorage.email &&
-            favour.status == "Asked"
+            favour.status == "1-Asked"
           );
         });
         this.favoursIllDo = this.allFavours.filter(function(favour) {
           return favour.doItUserId == localStorage.userId;
         });
+        this.favoursIllDo = _.orderBy(this.favoursIllDo, ["status"], ["asc"]);
       })
       .catch(error => {
         console.log(error);

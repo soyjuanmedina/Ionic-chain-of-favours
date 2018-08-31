@@ -83,7 +83,7 @@ export class AskingPage {
         location: this.todo.value.location,
         askedMail: askedMail,
         askedUserId: askedUserId,
-        status: "Asked"
+        status: "1-Asked"
       })
       .then(data => {
         this.navCtrl.pop();

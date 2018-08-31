@@ -15,10 +15,10 @@
         </p>
         <ion-list>
             <ion-item *ngFor="let favour of favoursArray let i=index" (click)="showFavour(favour)" color="primary">
-                <ion-icon class="center" *ngIf="favour.status == 'In progress'" name="bulb" item-end><br>
+                <ion-icon class="center" *ngIf="favour.status == '2-Progress'" name="bulb" item-end><br>
                     <div class="font-small">In progress</div>
                 </ion-icon>
-                <ion-icon class="center" *ngIf="favour.status == 'Finished'" name="checkmark-circle" item-end><br>
+                <ion-icon class="center" *ngIf="favour.status == '3-Finished'" name="checkmark-circle" item-end><br>
                     <div class="font-small">Finished</div>
                 </ion-icon>
                 <h2>{{ favour.title }}</h2>

@@ -18,15 +18,14 @@
     <div class="center uppercase primary-color-text" *ngIf="itsMine">
         <p>{{ 'YOU_ARE_VIEWING_YOUR_FAVOUR'| translate}}</p>
 
-        <p *ngIf="favour.status == 'In progress'" class="white-text submit-btn">
+        <p *ngIf="favour.status == '2-Progress'" class="white-text submit-btn">
             {{ 'CONGRATULATIONS'| translate}}
             <br> {{ favour?.doItUserName}} {{ 'WANTS_TO_DO_YOU_THIS_FAVOUR'| translate}}
         </p>
 
-        <p *ngIf="favour.status == 'Finished'" class="white-text submit-btn" color = "success">
+        <p *ngIf="favour.status == '3-Finished'" class="white-text submit-btn" color="success">
             {{ 'FAVOUR_FINISHED'| translate}}
-            <br> {{ 'THIS_FAVOUR_WAS_FINISHED_BY'| translate}} {{ favour?.doItUserName}} 
-            {{ 'THE'| translate}} {{ favour?.finishedDate | date }}
+            <br> {{ 'THIS_FAVOUR_WAS_FINISHED_BY'| translate}} {{ favour?.doItUserName}} {{ 'THE'| translate}} {{ favour?.finishedDate | date }}
         </p>
 
     </div>
@@ -36,41 +35,41 @@
         <br> {{favour.askedName}}
     </div>
 
-    <div class="uppercase primary-color-text" *ngIf="favour.status != 'Finished'">
+    <div class="uppercase primary-color-text" *ngIf="favour.status != '3-Finished'">
         {{ 'OPTIONS'| translate}}
     </div>
 
     <div>
-        <button class="option-button" (click)="editFavour()" *ngIf="itsMine && favour.status == 'Asked'">
+        <button class="option-button" (click)="editFavour()" *ngIf="itsMine && favour.status == '1-Asked'">
         <ion-icon name="create"></ion-icon>
         <br>
         {{ 'EDIT_FAVOUR'| translate}}
       </button>
-        <button class="danger-color option-button" (click)="deleteFavour()" *ngIf="itsMine && favour.status == 'Asked'">
+        <button class="danger-color option-button" (click)="deleteFavour()" *ngIf="itsMine && favour.status == '1-Asked'">
         <ion-icon name="trash"></ion-icon>
         <br>
         {{ 'DELETE_FAVOUR'| translate}}
       </button>
 
-        <button class="option-button" (click)="viewProfile(favour.doItUserId)" *ngIf="itsMine && favour.status == 'In progress'">
+        <button class="option-button" (click)="viewProfile(favour.doItUserId)" *ngIf="itsMine && favour.status == '2-Progress'">
         <ion-icon name="contact"></ion-icon>
         <br>
         {{ 'VIEW_HELPER_PROFILE'| translate}} {{ favour?.doItUserName}}
       </button>
 
-        <button class="option-button" (click)="chat()" *ngIf="itsMine && favour.status == 'In progress'">
+        <button class="option-button" (click)="chat()" *ngIf="itsMine && favour.status == '2-Progress'">
           <ion-icon name="chatbubbles"></ion-icon>
           <br>
           {{ 'CHAT_WITH_HELPER'| translate}}
         </button>
 
-        <button class="option-button" (click)="finishFavour()" *ngIf="itsMine && favour.status == 'In progress'">
+        <button class="option-button" (click)="finishFavour()" *ngIf="itsMine && favour.status == '2-Progress'">
           <ion-icon name="happy"></ion-icon>
           <br>
           {{ favour?.doItUserName}} {{ 'FINISH_THE_FAVOUR'| translate}} 
         </button>
 
-        <button class="danger-color option-button" (click)="declineOffer()" *ngIf="itsMine && favour.status == 'In progress'">
+        <button class="danger-color option-button" (click)="declineOffer()" *ngIf="itsMine && favour.status == '2-Progress'">
           <ion-icon name="sad"></ion-icon>
           <br>
           {{ 'DECLINE_OFFER'| translate}}
