@@ -43,7 +43,6 @@ export class FinishFavourPage {
     });
 
     this.favour = this.navParams.data.favour;
-    console.log(this.favour);
   }
 
   valorateFavour() {
@@ -53,7 +52,7 @@ export class FinishFavourPage {
     });
     loader.present();
     this.favour.status = "Finished";
-    console.log(this.favour.id);
+    this.favour.finishedDate = Date.now();
     this._DB
       .updateDocument("favours", this.favour.id, this.favour)
       .then(data => {})
@@ -62,11 +61,13 @@ export class FinishFavourPage {
       });
 
     //Actualizamos el usuario con su valoración
-    let assessment = {};
+    let assessment: any = {};
     this.thanksForm.rate ? assessment.rate = this.thanksForm.rate : assessment.rate = "";
     this.thanksForm.comments ? assessment.comments = this.thanksForm.comments : assessment.comments = "";
+    assessment.date = Date.now();
     this.doItUser.assessments ? this.doItUser.assessments.push(assessment) :  this.doItUser.assessments = [ assessment ];
     this.doItUser.averageRate ? this.doItUser.averageRate = (this.doItUser.averageRate + this.thanksForm.rate) / 2 :  this.doItUser.averageRate = this.thanksForm.rate;
+    
     this._DB
       .updateDocument("users", this.favour.doItUserId, this.doItUser)
       .then(data => {
@@ -97,7 +98,6 @@ export class FinishFavourPage {
           doItUser.key = doItUser[key];
         }
         this.doItUser = doItUser;
-        console.log(this.doItUser);
       })
       .catch(error => {
         console.log(error);

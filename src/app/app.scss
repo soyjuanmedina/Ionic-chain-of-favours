@@ -18,8 +18,6 @@ ion-col.my-thin-col {
     margin-right: 10px;
 }
 
-ion-content {}
-
 .background-primary-color {
     background: $primary-color;
     color: #fff;
@@ -40,6 +38,7 @@ ion-content {}
     background: $secondary-color;
     border-radius: 30px !important;
     border: 1px solid #ffffff;
+    padding: 15px;
 }
 
 .white-text {

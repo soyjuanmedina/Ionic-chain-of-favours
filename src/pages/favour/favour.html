@@ -18,11 +18,17 @@
     <div class="center uppercase primary-color-text" *ngIf="itsMine">
         <p>{{ 'YOU_ARE_VIEWING_YOUR_FAVOUR'| translate}}</p>
 
-
         <p *ngIf="favour.status == 'In progress'" class="white-text submit-btn">
             {{ 'CONGRATULATIONS'| translate}}
             <br> {{ favour?.doItUserName}} {{ 'WANTS_TO_DO_YOU_THIS_FAVOUR'| translate}}
         </p>
+
+        <p *ngIf="favour.status == 'Finished'" class="white-text submit-btn" color = "success">
+            {{ 'FAVOUR_FINISHED'| translate}}
+            <br> {{ 'THIS_FAVOUR_WAS_FINISHED_BY'| translate}} {{ favour?.doItUserName}} 
+            {{ 'THE'| translate}} {{ favour?.finishedDate | date }}
+        </p>
+
     </div>
 
     <div class="center uppercase primary-color-text" *ngIf="!itsMine">
@@ -30,7 +36,7 @@
         <br> {{favour.askedName}}
     </div>
 
-    <div class="uppercase primary-color-text">
+    <div class="uppercase primary-color-text" *ngIf="favour.status != 'Finished'">
         {{ 'OPTIONS'| translate}}
     </div>
 

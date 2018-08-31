@@ -70,5 +70,8 @@
     "VALUINT_AND_COMMENTING": "valorando y comentado su actitud",
     "CLOSE_FAVOUR": "Cerrar el favor",
     "VALUE_THE_HELP": "Valora la ayuda",
-    "COMMENTS": "Comentarios"
+    "COMMENTS": "Comentarios",
+    "FAVOUR_FINISHED": "Favor terminado",
+    "THIS_FAVOUR_WAS_FINISHED_BY": "Este favor fue realizado por",
+    "THE": "el"
 }
