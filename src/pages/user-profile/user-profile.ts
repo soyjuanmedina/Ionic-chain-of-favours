@@ -50,6 +50,7 @@ export class UserProfilePage {
         console.log(error);
       });
     loader.dismiss();
+    console.log(this.user);
   }
 
   ionViewDidLoad() {

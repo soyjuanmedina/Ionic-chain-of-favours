@@ -84,7 +84,6 @@ export class HomePage {
           return favour.askedMail == localStorage.email;
         });
         this.myFavours = _.orderBy(this.myFavours, ["status"], ["asc"]);
-        console.log(this.myFavours);
         this.favoursInMyLocation = this.allFavours.filter(function(favour) {
           return (
             favour.location == localStorage.location &&

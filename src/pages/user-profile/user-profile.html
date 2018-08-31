@@ -34,6 +34,27 @@
             <ion-input type="text" [(ngModel)]="user.email" [disabled]="!itsMine || itsMine"></ion-input>
         </ion-item>
 
+        <p class="white-text center uppercase">{{ 'USER_RATINGS'| translate}}</p>
+
+        <p class="white-text">{{ 'AVERAGE_RATING'| translate}}</p>
+
+        <rating readOnly="true" [ngModel]="user.averageRate"> </rating>
+
+        <p class="white-text">{{ 'COMMENTS'| translate}}</p>
+
+        <ion-list>
+            <ion-item *ngFor="let assessment of user.assessments; let i=index" color="secondary">
+                <h2>{{ assessment.comments }}</h2>
+                <h3>{{ assessment.rate }}</h3>
+                <h3>{{ assessment.date }}</h3>
+            </ion-item>
+            <ion-item color="primary" *ngIf="favoursIllDo?.length > 2">
+                <ion-badge item-end color="secondary" (click)="ShowAll(favoursIllDo)">
+                    {{ 'SHOW_ALL'| translate}}
+                </ion-badge>
+            </ion-item>
+        </ion-list>
+
 
 
     </ion-list>
