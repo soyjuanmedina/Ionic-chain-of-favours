@@ -188,4 +188,13 @@ export class DatabaseProvider {
         });
     });
   }
+
+  subscribeObservable(collectionObj: string, docID: string) {
+    this._DB
+      .collection(collectionObj)
+      .doc(docID)
+      .onSnapshot(function(doc) {
+        return doc.data();
+      });
+  }
 }

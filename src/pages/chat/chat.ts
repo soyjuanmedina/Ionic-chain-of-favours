@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { LoadingController } from "ionic-angular";
 
@@ -17,9 +17,10 @@ import { DatabaseProvider } from "../../providers/database/database";
   selector: "page-chat",
   templateUrl: "chat.html"
 })
-export class ChatPage {
+export class ChatPage implements OnInit {
   favour;
   chat;
+  message = "";
 
   constructor(
     public navCtrl: NavController,
@@ -78,15 +79,16 @@ export class ChatPage {
   }
 
   sendMessage() {
-    console.log(this.chat);
+    console.log(this.message);
+    console.log(localStorage);
     let loader = this.loadingCtrl.create({
       content: "Please wait..."
     });
     loader.present();
     let message = {
       date: Date.now(),
-      message: "Ahora si",
-      user: "manolo"
+      message: this.message,
+      user: localStorage.name
     };
     this.chat.messages.push(message);
     this._DB
@@ -100,5 +102,9 @@ export class ChatPage {
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad ChatPage");
+  }
+
+  ngOnInit() {
+    this.chat = this._DB.subscribeObservable("chats", this.favour.chatId);
   }
 }

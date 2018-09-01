@@ -11,7 +11,9 @@
 
     <ion-list>
 
-
+        <ion-item *ngFor="let messages of chat?.messages" class="chat" text-wrap [ngClass]="{'chat-partner' : messages?.askedName == localStorage?.name}">
+            {{messages.message}}
+        </ion-item>
 
     </ion-list>
 
@@ -21,7 +23,7 @@
     <ion-toolbar>
         <ion-row>
             <ion-col col-10>
-                <ion-input type="text" placeholder="Enter Message...."></ion-input>
+                <ion-input type="text" [(ngModel)]="message" placeholder="Enter Message...."></ion-input>
             </ion-col>
             <ion-col col-2>
                 <button ion-button block (click)="sendMessage()">
