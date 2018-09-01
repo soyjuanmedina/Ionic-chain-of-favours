@@ -34,28 +34,34 @@
             <ion-input type="text" [(ngModel)]="user.email" [disabled]="!itsMine || itsMine"></ion-input>
         </ion-item>
 
-        <p class="white-text center uppercase">{{ 'USER_RATINGS'| translate}}</p>
+        <div *ngIf="user.assessments?.length > 0">
 
-        <p class="white-text">{{ 'AVERAGE_RATING'| translate}}</p>
+            <p class="white-text center uppercase">{{ 'USER_RATINGS'| translate}}</p>
 
-        <rating readOnly="true" [ngModel]="user.averageRate"> </rating>
+            <p class="white-text">{{ 'AVERAGE_RATING'| translate}}</p>
 
-        <p class="white-text">{{ 'COMMENTS'| translate}}</p>
+            <rating readOnly="true" [ngModel]="user.averageRate"> </rating>
 
-        <ion-list>
-            <ion-item *ngFor="let assessment of user.assessments; let i=index" color="secondary">
-                <h2>{{ assessment.comments }}</h2>
-                <h3>{{ assessment.rate }}</h3>
-                <h3>{{ assessment.date }}</h3>
-            </ion-item>
-            <ion-item color="primary" *ngIf="favoursIllDo?.length > 2">
-                <ion-badge item-end color="secondary" (click)="ShowAll(favoursIllDo)">
-                    {{ 'SHOW_ALL'| translate}}
-                </ion-badge>
-            </ion-item>
-        </ion-list>
+            <p class="white-text">{{ 'FAVOURS_DONE'| translate}}</p>
+
+            <ion-list>
+                <ion-item *ngFor="let assessment of user.assessments; let i=index" color="secondary" (click)="showFavour(assessment.favourId)">
+                    <p class="white-text center">{{ assessment.favourTitle }}</p>
+                    <h3>{{ 'DATE'| translate}}: {{ assessment.date | date }}</h3>
+                    <h3>{{ 'ASKED_BY'| translate}}: {{ assessment.askedName }}</h3>
+                    <h3>{{ 'RATE'| translate}}: {{ assessment.rate }}</h3>
+                    <h3>{{ 'COMMENTS'| translate}}: {{ assessment.comments }}</h3>
 
 
+                </ion-item>
+                <ion-item color="primary" *ngIf="favoursIllDo?.length > 2">
+                    <ion-badge item-end color="secondary" (click)="ShowAll(favoursIllDo)">
+                        {{ 'SHOW_ALL'| translate}}
+                    </ion-badge>
+                </ion-item>
+            </ion-list>
+
+        </div>
 
     </ion-list>
 

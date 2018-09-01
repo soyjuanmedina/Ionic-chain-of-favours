@@ -58,12 +58,13 @@
     "VIEW_YOUR_PROFILE": "View your Profile",
     "YOU_ARE_VIEWING_YOUR_PROFILE": "You are viewing your profile",
     "YOU_ARE_VIEWING_THE_PROFILE_OF": "You are viewing the profile of ",
-    "YOU_ARE_VIEWING_YOUR_FAVOUR": "Favour asked by you",
+    "FAVOUR_ASKED_BY_YOU": "Favour asked by you",
     "OPTIONS": "Options",
     "CONGRATULATIONS": "¡¡CONGRATULATIONS!!",
     "WANTS_TO_DO_YOU_THIS_FAVOUR": "wants to do you this favour",
     "FAVOUR_INFORMATION": "Favour information",
-    "VIEW_HELPER_PROFILE": "View profile of ",
+    "VIEW_HELPER_PROFILE": "View helper profile",
+    "VIEW_ASKED_PROFILE": "View asked profile",
     "FINISH_THE_FAVOUR": "finish the favour",
     "SAY_THANKS": "Say thanks",
     "SAY_THANKS_TO": "Say thanks to",
@@ -75,5 +76,9 @@
     "THIS_FAVOUR_WAS_FINISHED_BY": "This favour was finised by",
     "THE": "the",
     "USER_RATINGS": "User ratings",
-    "AVERAGE_RATING": "Average rating"
+    "AVERAGE_RATING": "Average rating",
+    "DATE": "Date",
+    "FAVOURS_DONE": "Favours done",
+    "ASSESSMENT": "Assessment",
+    "RATE": "Rate"
 }

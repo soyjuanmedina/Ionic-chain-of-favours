@@ -19,12 +19,14 @@ export class ShowAllFavoursPage {
   favoursArray = [];
   pageTitle = "";
   location = "";
+  itsMine = "false";
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.favoursArray = this.navParams.get("favoursArray");
     this.location = localStorage.location;
     if (this.favoursArray[0].askedMail == localStorage.email) {
       this.pageTitle = "LIST_OF_ALL_FAVOUR_YOU_ASK";
+      this.itsMine = "true";
     }
     if (
       this.favoursArray[0].location == localStorage.location &&

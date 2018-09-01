@@ -34,6 +34,7 @@ export class FavourPage {
   itsMine: boolean = false;
   illGoToDoIt: boolean = false;
   editing: boolean = false;
+  favourId;
 
   constructor(
     public navCtrl: NavController,
@@ -42,22 +43,26 @@ export class FavourPage {
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController
   ) {
-    this.favour = this.navParams.get("favour");
-    this.uneditedFavour = _.clone(this.favour);
-    if (
-      localStorage.userId == this.favour.askedUserId ||
-      localStorage.email == this.favour.askedMail
-    ) {
-      this.itsMine = true;
-    }
-    if (localStorage.userId == this.favour.doItUserId) {
-      this.illGoToDoIt = true;
+    if (this.navParams.get("favourId")) {
+      this.favourId = this.navParams.get("favourId");
+      this.loadFavour(this.favourId);
+    } else {
+      this.favour = this.navParams.get("favour");
+      this.uneditedFavour = _.clone(this.favour);
+      if (
+        localStorage.userId == this.favour.askedUserId ||
+        localStorage.email == this.favour.askedMail
+      ) {
+        this.itsMine = true;
+      }
+      if (localStorage.userId == this.favour.doItUserId) {
+        this.illGoToDoIt = true;
+      }
     }
   }
 
   editFavour() {
     this.editing = true;
-    console.log(this.favour);
   }
 
   chat() {
@@ -187,6 +192,27 @@ export class FavourPage {
 
   viewProfile(userId) {
     this.navCtrl.push(UserProfilePage, { userId });
+  }
+
+  loadFavour(favourId) {
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
+    this._DB
+      .getDocument("favours", favourId)
+      .then(documentSnapshot => {
+        var favour = documentSnapshot.data();
+        for (var key in favour) {
+          favour.key = favour[key];
+        }
+        this.favour = favour;
+        console.log(this.favour);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    loader.dismiss();
   }
 
   ionViewDidLoad() {}

@@ -62,12 +62,24 @@ export class FinishFavourPage {
 
     //Actualizamos el usuario con su valoración
     let assessment: any = {};
-    this.thanksForm.rate ? assessment.rate = this.thanksForm.rate : assessment.rate = "";
-    this.thanksForm.comments ? assessment.comments = this.thanksForm.comments : assessment.comments = "";
+    this.thanksForm.rate
+      ? (assessment.rate = this.thanksForm.rate)
+      : (assessment.rate = "");
+    this.thanksForm.comments
+      ? (assessment.comments = this.thanksForm.comments)
+      : (assessment.comments = "");
     assessment.date = Date.now();
-    this.doItUser.assessments ? this.doItUser.assessments.push(assessment) :  this.doItUser.assessments = [ assessment ];
-    this.doItUser.averageRate ? this.doItUser.averageRate = (this.doItUser.averageRate + this.thanksForm.rate) / 2 :  this.doItUser.averageRate = this.thanksForm.rate;
-    
+    assessment.favourId = this.favour.id;
+    assessment.askedName = this.favour.askedName;
+    assessment.favourTitle = this.favour.title;
+    this.doItUser.assessments
+      ? this.doItUser.assessments.push(assessment)
+      : (this.doItUser.assessments = [assessment]);
+    this.doItUser.averageRate
+      ? (this.doItUser.averageRate =
+          (this.doItUser.averageRate + this.thanksForm.rate) / 2)
+      : (this.doItUser.averageRate = this.thanksForm.rate);
+
     this._DB
       .updateDocument("users", this.favour.doItUserId, this.doItUser)
       .then(data => {

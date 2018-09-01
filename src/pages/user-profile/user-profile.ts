@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { DatabaseProvider } from "../../providers/database/database";
 
 import { LoadingController } from "ionic-angular";
+import { FavourPage } from "../favour/favour";
 
 /**
  * Generated class for the UserProfilePage page.
@@ -44,13 +45,15 @@ export class UserProfilePage {
           user.key = user[key];
         }
         this.user = user;
-        console.log(this.user);
       })
       .catch(error => {
         console.log(error);
       });
     loader.dismiss();
-    console.log(this.user);
+  }
+
+  showFavour(favourId) {
+    this.navCtrl.push(FavourPage, { favourId });
   }
 
   ionViewDidLoad() {

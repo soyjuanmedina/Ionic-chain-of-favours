@@ -23,7 +23,7 @@
                 </ion-icon>
                 <h2>{{ favour.title }}</h2>
                 <h3>{{ favour.description }}</h3>
-                <p>{{ 'ASKED_BY'| translate}} {{ favour.askedName }}</p>
+                <p *ngIf="!itsMine">{{ 'ASKED_BY'| translate}} {{ favour.askedName }}</p>
             </ion-item>
         </ion-list>
     </div>

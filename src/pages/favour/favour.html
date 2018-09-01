@@ -7,7 +7,7 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>{{ favour.title }}</ion-title>
+        <ion-title>{{ favour?.title }}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -16,82 +16,93 @@
 <ion-content padding>
 
     <div class="center uppercase primary-color-text" *ngIf="itsMine">
-        <p>{{ 'YOU_ARE_VIEWING_YOUR_FAVOUR'| translate}}</p>
+        <p>{{ 'FAVOUR_ASKED_BY_YOU'| translate}}</p>
 
-        <p *ngIf="favour.status == '2-Progress'" class="white-text submit-btn">
+        <p *ngIf="favour?.status == '2-Progress'" class="white-text submit-btn">
             {{ 'CONGRATULATIONS'| translate}}
             <br> {{ favour?.doItUserName}} {{ 'WANTS_TO_DO_YOU_THIS_FAVOUR'| translate}}
         </p>
-
-        <p *ngIf="favour.status == '3-Finished'" class="white-text submit-btn" color="success">
-            {{ 'FAVOUR_FINISHED'| translate}}
-            <br> {{ 'THIS_FAVOUR_WAS_FINISHED_BY'| translate}} {{ favour?.doItUserName}} {{ 'THE'| translate}} {{ favour?.finishedDate | date }}
-        </p>
-
     </div>
 
     <div class="center uppercase primary-color-text" *ngIf="!itsMine">
         {{ 'FAVOUR_ASKED_BY'| translate}}
-        <br> {{favour.askedName}}
+        <br> {{favour?.askedName}}
     </div>
 
-    <div class="uppercase primary-color-text" *ngIf="favour.status != '3-Finished'">
+
+    <div class="center uppercase primary-color-text">
+        <p *ngIf="favour?.status == '3-Finished'" class="white-text submit-btn">
+            {{ 'FAVOUR_FINISHED'| translate}}
+            <br> {{ 'THIS_FAVOUR_WAS_FINISHED_BY'| translate}} {{ favour?.doItUserName}} {{ 'THE'| translate}} {{ favour?.finishedDate | date }}
+        </p>
+    </div>
+
+    <div class="uppercase primary-color-text">
         {{ 'OPTIONS'| translate}}
-    </div>
 
-    <div>
-        <button class="option-button" (click)="editFavour()" *ngIf="itsMine && favour.status == '1-Asked'">
+
+        <div>
+            <button class="option-button" (click)="editFavour()" *ngIf="itsMine && favour?.status == '1-Asked'">
         <ion-icon name="create"></ion-icon>
         <br>
         {{ 'EDIT_FAVOUR'| translate}}
       </button>
-        <button class="danger-color option-button" (click)="deleteFavour()" *ngIf="itsMine && favour.status == '1-Asked'">
+            <button class="danger-color option-button" (click)="deleteFavour()" *ngIf="itsMine && favour?.status == '1-Asked'">
         <ion-icon name="trash"></ion-icon>
         <br>
         {{ 'DELETE_FAVOUR'| translate}}
       </button>
 
-        <button class="option-button" (click)="viewProfile(favour.doItUserId)" *ngIf="itsMine && favour.status == '2-Progress'">
+            <button class="option-button" (click)="viewProfile(favour.doItUserId)" *ngIf="itsMine && favour?.status == '2-Progress' || favour?.status == '3-Finished'">
         <ion-icon name="contact"></ion-icon>
         <br>
-        {{ 'VIEW_HELPER_PROFILE'| translate}} {{ favour?.doItUserName}}
+        {{ 'VIEW_HELPER_PROFILE'| translate}} 
       </button>
 
-        <button class="option-button" (click)="chat()" *ngIf="itsMine && favour.status == '2-Progress'">
+            <button class="option-button" (click)="chat()" *ngIf="itsMine && favour?.status == '2-Progress'">
           <ion-icon name="chatbubbles"></ion-icon>
           <br>
           {{ 'CHAT_WITH_HELPER'| translate}}
         </button>
 
-        <button class="option-button" (click)="finishFavour()" *ngIf="itsMine && favour.status == '2-Progress'">
+            <button class="option-button" (click)="finishFavour()" *ngIf="itsMine && favour?.status == '2-Progress'">
           <ion-icon name="happy"></ion-icon>
           <br>
           {{ favour?.doItUserName}} {{ 'FINISH_THE_FAVOUR'| translate}} 
         </button>
 
-        <button class="danger-color option-button" (click)="declineOffer()" *ngIf="itsMine && favour.status == '2-Progress'">
+            <button class="danger-color option-button" (click)="declineOffer()" *ngIf="itsMine && favour?.status == '2-Progress'">
           <ion-icon name="sad"></ion-icon>
           <br>
           {{ 'DECLINE_OFFER'| translate}}
         </button>
 
-        <button class="option-button" (click)="chat()" *ngIf="illGoToDoIt">
+            <button class="option-button" (click)="chat()" *ngIf="illGoToDoIt">
               <ion-icon name="chatbubbles"></ion-icon>
               <br>
               {{ 'CHAT_WITH_ASKER'| translate}}
             </button>
 
-        <button class="danger-color option-button" (click)="dontDoIt()" *ngIf="illGoToDoIt">
+            <button class="danger-color option-button" (click)="dontDoIt()" *ngIf="illGoToDoIt">
                 <ion-icon name="thumbs-down"></ion-icon>
                 <br>
                 {{ 'DONT_DO_THE_FAVOUR'| translate}}
               </button>
 
-        <button class="option-button" (click)="doFavour()" *ngIf="!itsMine && !illGoToDoIt">
-                  <ion-icon name="thumbs-up"></ion-icon>
+            <button class="option-button" (click)="viewProfile(favour.askedUserId)" *ngIf="!itsMine">
+                  <ion-icon name="contact"></ion-icon>
                   <br>
-                  {{ 'DO_THIS_FAVOUR'| translate}}
+                  {{ 'VIEW_ASKED_PROFILE'| translate}} 
                 </button>
+
+
+
+            <button class="option-button" (click)="doFavour()" *ngIf="!itsMine && !illGoToDoIt && favour?.status != '3-Finished'">
+              <ion-icon name="thumbs-up"></ion-icon>
+              <br>
+              {{ 'DO_THIS_FAVOUR'| translate}}
+            </button>
+        </div>
     </div>
 
     <p class="uppercase primary-color-text">
@@ -107,10 +118,10 @@
         </ion-card-header>
         <ion-card-content>
             <div *ngIf="!editing">
-                {{ 'TITLE'| translate}}: {{ favour.title }}
+                {{ 'TITLE'| translate}}: {{ favour?.title }}
             </div>
             <div *ngIf="!editing">
-                {{ 'DESCRIPTION'| translate}}: {{ favour.description }}
+                {{ 'DESCRIPTION'| translate}}: {{ favour?.description }}
             </div>
 
             <hr/>
@@ -118,19 +129,19 @@
                 <div>
                     {{ 'USERFULL_INFORMATION'| translate}}
                 </div>
-                <div *ngIf="favour.expiration">
-                    <div *ngIf="favour.expirationDate">
-                        {{ 'LAST_DAY_TO_DO_IT'| translate}}: {{ favour.expirationDate }}
+                <div *ngIf="favour?.expiration">
+                    <div *ngIf="favour?.expirationDate">
+                        {{ 'LAST_DAY_TO_DO_IT'| translate}}: {{ favour?.expirationDate }}
                     </div>
-                    <div *ngIf="favour.expirationHour">
-                        {{ 'LAST_HOUR_TO_DO_IT'| translate}}: {{ favour.expirationHour }}
+                    <div *ngIf="favour?.expirationHour">
+                        {{ 'LAST_HOUR_TO_DO_IT'| translate}}: {{ favour?.expirationHour }}
                     </div>
                 </div>
-                <div *ngIf="favour.tip">
-                    {{ 'TIP_AMOUNT'| translate}}: {{ favour.tipAmount }}
+                <div *ngIf="favour?.tip">
+                    {{ 'TIP_AMOUNT'| translate}}: {{ favour?.tipAmount }}
                 </div>
-                <div *ngIf="favour.location">
-                    {{ 'LOCATION'| translate}}: {{ favour.location }}
+                <div *ngIf="favour?.location">
+                    {{ 'LOCATION'| translate}}: {{ favour?.location }}
                 </div>
             </div>
 
@@ -149,7 +160,7 @@
                     <ion-label>{{ 'FAVOUR_HAS_DEADLINE'| translate}}</ion-label>
                     <ion-toggle [(ngModel)]="favour.expiration"></ion-toggle>
                 </ion-item>
-                <ion-list *ngIf="favour.expiration">
+                <ion-list *ngIf="favour?.expiration">
                     <ion-item>
                         <ion-label floating>{{ 'LAST_DAY_TO_DO_IT'| translate}}</ion-label>
                         <ion-datetime displayFormat="DD MM YYYY" [(ngModel)]="favour.expirationDate"></ion-datetime>
@@ -164,7 +175,7 @@
                     <ion-label>{{ 'OFFER_TIP'| translate}}</ion-label>
                     <ion-toggle [(ngModel)]="favour.tip"></ion-toggle>
                 </ion-item>
-                <ion-item *ngIf="favour.tip">
+                <ion-item *ngIf="favour?.tip">
                     <ion-label>{{ 'TIP_AMOUNT'| translate}}: {{favour.tipAmount}} €</ion-label>
                     <ion-range min="1" max="10" pin="true" [(ngModel)]="favour.tipAmount">
                         <ion-label range-left>1 €</ion-label>
@@ -177,7 +188,7 @@
                     <ion-toggle [(ngModel)]="favour.goToSomewhere"></ion-toggle>
                 </ion-item>
 
-                <div [hidden]="!favour.goToSomewhere">
+                <div [hidden]="!favour?.goToSomewhere">
                     <ion-item>
                         <ion-label floating>{{ 'LOCATION'| translate}}</ion-label>
                         <ion-input disabled="true" type="text" [(ngModel)]="favour.location"></ion-input>
