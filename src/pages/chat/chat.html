@@ -7,21 +7,29 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content #content padding id="chatPage">
 
     <ion-list>
-        <ion-list-header>
-            USERS
-        </ion-list-header>
-        <ion-item *ngFor="let user of availableusers" (click)="goToChat(user)">
-            <ion-avatar item-start>
-                <img src="http://via.placeholder.com/16x16">
-            </ion-avatar>
-            <h2>{{user.name || "Anonymous"}}</h2>
 
-            <p>{{user.email}}</p>
-        </ion-item>
+
 
     </ion-list>
 
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+        <ion-row>
+            <ion-col col-10>
+                <ion-input type="text" placeholder="Enter Message...."></ion-input>
+            </ion-col>
+            <ion-col col-2>
+                <button ion-button block (click)="sendMessage()">
+          Send
+        </button>
+            </ion-col>
+        </ion-row>
+
+
+    </ion-toolbar>
+</ion-footer>

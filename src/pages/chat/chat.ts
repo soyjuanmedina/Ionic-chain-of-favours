@@ -19,6 +19,7 @@ import { DatabaseProvider } from "../../providers/database/database";
 })
 export class ChatPage {
   favour;
+  chat;
 
   constructor(
     public navCtrl: NavController,
@@ -33,21 +34,18 @@ export class ChatPage {
         content: "Please wait..."
       });
       loader.present();
+      let chat = {
+        askedName: this.favour.askedName,
+        helperName: this.favour.doItUserName,
+        messages: []
+      };
       this._DB
-        .addDocument("chats", {
-          askedName: this.favour.askedName,
-          helperName: this.favour.doItUserName,
-          messages: []
-        })
+        .addDocument("chats", chat)
         .then(data => {
-          console.log(data.id);
           this.favour.chatId = data.id;
           this._DB
             .updateDocument("favours", this.favour.id, this.favour)
-            .then(data => {
-              console.log(data);
-              this.favour = data;
-            })
+            .then(data => {})
             .catch(error => {
               console.log(error);
             });
@@ -56,7 +54,48 @@ export class ChatPage {
           console.log(error);
         });
       loader.dismiss();
+    } else {
+      let loader = this.loadingCtrl.create({
+        content: "Please wait..."
+      });
+      loader.present();
+      this._DB
+        .getDocument("chats", this.favour.chatId)
+        .then(documentSnapshot => {
+          var chat = documentSnapshot.data();
+          for (var key in chat) {
+            chat.key = chat[key];
+          }
+          delete chat.key;
+          this.chat = chat;
+          console.log(this.chat);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      loader.dismiss();
     }
+  }
+
+  sendMessage() {
+    console.log(this.chat);
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
+    let message = {
+      date: Date.now(),
+      message: "Ahora si",
+      user: "manolo"
+    };
+    this.chat.messages.push(message);
+    this._DB
+      .updateDocument("chats", this.favour.chatId, this.chat)
+      .then(data => {})
+      .catch(error => {
+        console.log(error);
+      });
+    loader.dismiss();
   }
 
   ionViewDidLoad() {
