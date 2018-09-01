@@ -59,7 +59,7 @@
         {{ 'VIEW_HELPER_PROFILE'| translate}} 
       </button>
 
-            <button class="option-button" (click)="chat()" *ngIf="itsMine && favour?.status == '2-Progress'">
+            <button class="option-button" (click)="chat(favour)" *ngIf="itsMine && favour?.status == '2-Progress'">
           <ion-icon name="chatbubbles"></ion-icon>
           <br>
           {{ 'CHAT_WITH_HELPER'| translate}}
@@ -77,7 +77,7 @@
           {{ 'DECLINE_OFFER'| translate}}
         </button>
 
-            <button class="option-button" (click)="chat()" *ngIf="illGoToDoIt">
+            <button class="option-button" (click)="chat(favour)" *ngIf="illGoToDoIt">
               <ion-icon name="chatbubbles"></ion-icon>
               <br>
               {{ 'CHAT_WITH_ASKER'| translate}}
