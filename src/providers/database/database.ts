@@ -15,7 +15,7 @@ export class DatabaseProvider {
     * @description     Defines an object for handling interfacing with the
     				   Cloud Firestore database service
     */
-  private _DB: any;
+  public _DB: any;
 
   constructor(public http: HttpClient) {
     // Initialise access to the firestore service

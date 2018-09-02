@@ -1,6 +1,7 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { LoadingController } from "ionic-angular";
+import { Content } from "ionic-angular";
 
 //Providers
 import { DatabaseProvider } from "../../providers/database/database";
@@ -18,6 +19,8 @@ import { DatabaseProvider } from "../../providers/database/database";
   templateUrl: "chat.html"
 })
 export class ChatPage implements OnInit {
+  @ViewChild(Content)
+  content: Content;
   favour;
   chat;
   message = "";
@@ -29,7 +32,6 @@ export class ChatPage implements OnInit {
     public loadingCtrl: LoadingController
   ) {
     this.favour = this.navParams.get("favour");
-    console.log(this.favour);
     if (!this.favour.chatId) {
       let loader = this.loadingCtrl.create({
         content: "Please wait..."
@@ -69,7 +71,6 @@ export class ChatPage implements OnInit {
           }
           delete chat.key;
           this.chat = chat;
-          console.log(this.chat);
         })
         .catch(error => {
           console.log(error);
@@ -79,8 +80,6 @@ export class ChatPage implements OnInit {
   }
 
   sendMessage() {
-    console.log(this.message);
-    console.log(localStorage);
     let loader = this.loadingCtrl.create({
       content: "Please wait..."
     });
@@ -98,13 +97,21 @@ export class ChatPage implements OnInit {
         console.log(error);
       });
     loader.dismiss();
+    this.content.scrollToBottom();
   }
 
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad ChatPage");
-  }
+  ionViewDidLoad() {}
 
-  ngOnInit() {
-    this.chat = this._DB.subscribeObservable("chats", this.favour.chatId);
+  ngOnInit() {}
+
+  ionViewDidEnter() {
+    this._DB._DB
+      .collection("chats")
+      .doc(this.favour.chatId)
+      .onSnapshot(function(doc) {
+        this.chat = doc.data();
+        console.log(this.chat);
+      });
+    this.content.scrollToBottom();
   }
 }
