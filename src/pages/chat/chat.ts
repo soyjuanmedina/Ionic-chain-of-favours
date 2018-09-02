@@ -46,6 +46,7 @@ export class ChatPage implements OnInit {
         .addDocument("chats", chat)
         .then(data => {
           this.favour.chatId = data.id;
+          this.getChat(this.favour.chatId);
           this._DB
             .updateDocument("favours", this.favour.id, this.favour)
             .then(data => {})
@@ -58,28 +59,34 @@ export class ChatPage implements OnInit {
         });
       loader.dismiss();
     } else {
-      let loader = this.loadingCtrl.create({
-        content: "Please wait..."
-      });
-      loader.present();
-      this._DB
-        .getDocument("chats", this.favour.chatId)
-        .then(documentSnapshot => {
-          var chat = documentSnapshot.data();
-          for (var key in chat) {
-            chat.key = chat[key];
-          }
-          delete chat.key;
-          this.chat = chat;
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      loader.dismiss();
+      this.getChat(this.favour.chatId);
     }
   }
 
+  getChat(chatId){
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
+    this._DB
+      .getDocument("chats", this.favour.chatId)
+      .then(documentSnapshot => {
+        var chat = documentSnapshot.data();
+        for (var key in chat) {
+          chat.key = chat[key];
+        }
+        delete chat.key;
+        this.chat = chat;
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    loader.dismiss();
+
+  }
+
   sendMessage() {
+    console.log(this.chat);
     let loader = this.loadingCtrl.create({
       content: "Please wait..."
     });
@@ -105,6 +112,7 @@ export class ChatPage implements OnInit {
   ngOnInit() {}
 
   ionViewDidEnter() {
+    if(this.favour.chatId){
     this._DB._DB
       .collection("chats")
       .doc(this.favour.chatId)
@@ -113,5 +121,6 @@ export class ChatPage implements OnInit {
         console.log(this.chat);
       });
     this.content.scrollToBottom();
+    } 
   }
 }
