@@ -41,6 +41,7 @@
     "ionic-angular": "3.9.2",
     "ionic2-rating": "^1.2.2",
     "ionicons": "3.0.0",
+    "npm": "^6.4.1",
     "promise-polyfill": "8.1.0",
     "rxjs": "^6.2.2",
     "rxjs-compat": "^6.2.2",

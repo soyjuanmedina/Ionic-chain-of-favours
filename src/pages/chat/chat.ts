@@ -104,23 +104,29 @@ export class ChatPage implements OnInit {
         console.log(error);
       });
     loader.dismiss();
+    console.log(this.content);
     this.content.scrollToBottom();
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() {
+  }
 
   ngOnInit() {}
 
-  ionViewDidEnter() {
-    if(this.favour.chatId){
+  observingChat(objectThis){
+    if(objectThis.favour.chatId){
     this._DB._DB
       .collection("chats")
-      .doc(this.favour.chatId)
+      .doc(objectThis.favour.chatId)
       .onSnapshot(function(doc) {
-        this.chat = doc.data();
-        console.log(this.chat);
-      });
-    this.content.scrollToBottom();
+        objectThis.chat = doc.data();
+        objectThis.content.scrollToBottom();
+      });    
     } 
+  }
+
+  ionViewDidEnter() {
+    this.content.scrollToBottom();
+    this.observingChat(this);
   }
 }
