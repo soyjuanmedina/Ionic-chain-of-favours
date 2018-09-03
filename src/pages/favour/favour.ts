@@ -65,8 +65,8 @@ export class FavourPage {
     this.editing = true;
   }
 
-  chat(favour) {
-    this.navCtrl.push(ChatPage, { favour });
+  chat(favourId) {
+    this.navCtrl.push(ChatPage, { favourId });
   }
 
   doFavour() {

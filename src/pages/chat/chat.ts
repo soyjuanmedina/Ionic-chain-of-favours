@@ -24,6 +24,7 @@ export class ChatPage implements OnInit {
   favour;
   chat;
   message = "";
+  favourId;
 
   constructor(
     public navCtrl: NavController,
@@ -31,45 +32,66 @@ export class ChatPage implements OnInit {
     private _DB: DatabaseProvider,
     public loadingCtrl: LoadingController
   ) {
-    this.favour = this.navParams.get("favour");
-    if (!this.favour.chatId) {
-      let loader = this.loadingCtrl.create({
-        content: "Please wait..."
-      });
-      loader.present();
-      let chat = {
-        askedName: this.favour.askedName,
-        helperName: this.favour.doItUserName,
-        messages: []
-      };
-      this._DB
-        .addDocument("chats", chat)
-        .then(data => {
-          this.favour.chatId = data.id;
-          this.getChat(this.favour.chatId);
-          this._DB
-            .updateDocument("favours", this.favour.id, this.favour)
-            .then(data => {})
-            .catch(error => {
-              console.log(error);
-            });
-        })
-        .catch(error => {
-          console.log(error);
-        });
-      loader.dismiss();
-    } else {
-      this.getChat(this.favour.chatId);
-    }
-  }
 
-  getChat(chatId){
+    this.favourId = this.navParams.get("favourId");
+
     let loader = this.loadingCtrl.create({
       content: "Please wait..."
     });
     loader.present();
     this._DB
-      .getDocument("chats", this.favour.chatId)
+      .getDocument("favours", this.favourId)
+      .then(documentSnapshot => {
+        var favour = documentSnapshot.data();
+        for (var key in favour) {
+          favour.key = favour[key];
+        }
+        this.favour = favour;
+        console.log(this.favour);
+        if (!this.favour.chatId) {
+          let chat = {
+            askedUser: {
+              name: this.favour.askedName, id: this.favour.askedUserId
+            },
+            doItUser: {
+              name: this.favour.doItUserName, id: this.favour.doItUserId
+            },
+            messages: []
+          };
+          this._DB
+            .addDocument("chats", chat)
+            .then(data => {
+              this.favour.chatId = data.id;
+              this.getChat(this.favour.chatId);
+              this._DB
+                .updateDocument("favours", this.favour.id, this.favour)
+                .then(data => { })
+                .catch(error => {
+                  console.log(error);
+                });
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        } else {
+          this.getChat(this.favour.chatId);
+        }
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    loader.dismiss();
+
+  }
+
+  getChat(chatId){
+    console.log('getchat')
+    let loader = this.loadingCtrl.create({
+      content: "Please wait..."
+    });
+    loader.present();
+    this._DB
+      .getDocument("chats", chatId)
       .then(documentSnapshot => {
         var chat = documentSnapshot.data();
         for (var key in chat) {
@@ -82,11 +104,11 @@ export class ChatPage implements OnInit {
         console.log(error);
       });
     loader.dismiss();
-
+    this.observingChat(this);
+    
   }
 
   sendMessage() {
-    console.log(this.chat);
     let loader = this.loadingCtrl.create({
       content: "Please wait..."
     });
@@ -94,7 +116,7 @@ export class ChatPage implements OnInit {
     let message = {
       date: Date.now(),
       message: this.message,
-      user: localStorage.name
+      user: { name: localStorage.name, id: localStorage.userId}
     };
     this.chat.messages.push(message);
     this._DB
@@ -104,8 +126,7 @@ export class ChatPage implements OnInit {
         console.log(error);
       });
     loader.dismiss();
-    console.log(this.content);
-    this.content.scrollToBottom();
+    if (this.content._scroll) this.content.scrollToBottom(0);
   }
 
   ionViewDidLoad() {
@@ -114,19 +135,21 @@ export class ChatPage implements OnInit {
   ngOnInit() {}
 
   observingChat(objectThis){
+    
     if(objectThis.favour.chatId){
     this._DB._DB
       .collection("chats")
       .doc(objectThis.favour.chatId)
       .onSnapshot(function(doc) {
         objectThis.chat = doc.data();
-        objectThis.content.scrollToBottom();
+        if (objectThis.content._scroll) objectThis.content.scrollToBottom(0);
       });    
     } 
   }
 
   ionViewDidEnter() {
-    this.content.scrollToBottom();
-    this.observingChat(this);
+    console.log(this.favour);
+    this.content.scrollTo(100000, 1000000, 3000)
+    
   }
 }
