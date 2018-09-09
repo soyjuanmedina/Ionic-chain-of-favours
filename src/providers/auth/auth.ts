@@ -1,7 +1,12 @@
 import { Injectable } from "@angular/core";
+import { auth } from "firebase/app";
 import { AngularFireAuth } from "angularfire2/auth";
 import { DatabaseProvider } from "../database/database";
 import firebase from "firebase";
+import {
+  AngularFirestoreDocument,
+  AngularFirestore
+} from "angularfire2/firestore";
 
 /*
   Generated class for the AuthProvider provider.
@@ -13,7 +18,11 @@ import firebase from "firebase";
 export class AuthProvider {
   user;
 
-  constructor(private afAuth: AngularFireAuth, private _DB: DatabaseProvider) {}
+  constructor(
+    private afAuth: AngularFireAuth,
+    private _DB: DatabaseProvider,
+    private afs: AngularFirestore
+  ) {}
 
   registerUser(data) {
     return this.afAuth.auth
@@ -55,10 +64,80 @@ export class AuthProvider {
       .catch(err => Promise.reject(err));
   }
 
-  loginWithGoggle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    console.log("auth.loginWithGoggle");
-    return this.socialSignIn(provider);
+  googleLogin() {
+    const provider = new auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
+  oAuthLogin(provider) {
+    return this.afAuth.auth.signInWithPopup(provider).then(credential => {
+      console.log(credential);
+      Promise.resolve((this.user = credential));
+      this._DB
+        .getDocumentsByQuery("users", "uid", "==", credential.user.uid)
+        .then(data => {
+          if (data.size > 0) {
+            data.forEach(function(documentSnapshot) {
+              localStorage.setItem("userId", documentSnapshot.id);
+              var document = documentSnapshot.data();
+              for (var key in document) {
+                localStorage.setItem(key, document[key]);
+              }
+            });
+          } else {
+            this.updateUserData(credential.user);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    });
+  }
+
+  updateUserData(user) {
+    console.log(user);
+    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+      `users/${user.uid}`
+    );
+
+    if (user.displayName) {
+      var name = user.displayName
+        .split(" ")
+        .slice(0, -1)
+        .join(" ");
+      var surname = user.displayName
+        .split(" ")
+        .slice(-1)
+        .join(" ");
+    } else {
+      name = "";
+      surname = "";
+    }
+    const data: any = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      name: name,
+      surname: surname,
+      photoURL: user.photoURL
+    };
+
+    this._DB
+      .getDocumentsByQuery("users", "uid", "==", user.uid)
+      .then(data => {
+        data.forEach(function(documentSnapshot) {
+          localStorage.setItem("userId", documentSnapshot.id);
+          var document = documentSnapshot.data();
+          for (var key in document) {
+            localStorage.setItem(key, document[key]);
+          }
+        });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    return userRef.set(data, { merge: true });
   }
 
   logout() {
@@ -73,16 +152,5 @@ export class AuthProvider {
 
   getUser() {
     return this.afAuth.auth.currentUser.uid;
-  }
-
-  socialSignIn(provider) {
-    console.log("socialSignIn");
-    return this.afAuth.auth
-      .signInWithPopup(provider)
-      .then(credential => {
-        this.user = credential.user;
-        // this.updateUserData()
-      })
-      .catch(error => console.log(error));
   }
 }

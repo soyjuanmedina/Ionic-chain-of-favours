@@ -69,10 +69,16 @@ export class LoginPage {
       });
   }
 
-  loginWithGoggle(){
-    console.log('loginWithGoggle');
+  loginWithGoggle() {
+    console.log("loginWithGoggle");
     this.auth
-      .loginWithGoggle()
+      .googleLogin()
+      .then(user => {
+        this.navCtrl.setRoot(HomePage);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   setLanguage(lang) {
