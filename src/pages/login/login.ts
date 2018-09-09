@@ -69,6 +69,12 @@ export class LoginPage {
       });
   }
 
+  loginWithGoggle(){
+    console.log('loginWithGoggle');
+    this.auth
+      .loginWithGoggle()
+  }
+
   setLanguage(lang) {
     console.log(lang);
     this.translateService.use(lang);

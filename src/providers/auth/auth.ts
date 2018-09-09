@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "angularfire2/auth";
 import { DatabaseProvider } from "../database/database";
+import firebase from "firebase";
 
 /*
   Generated class for the AuthProvider provider.
@@ -54,6 +55,12 @@ export class AuthProvider {
       .catch(err => Promise.reject(err));
   }
 
+  loginWithGoggle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    console.log("auth.loginWithGoggle");
+    return this.socialSignIn(provider);
+  }
+
   logout() {
     this.afAuth.auth.signOut().then(() => {
       window.localStorage.clear();
@@ -66,5 +73,16 @@ export class AuthProvider {
 
   getUser() {
     return this.afAuth.auth.currentUser.uid;
+  }
+
+  socialSignIn(provider) {
+    console.log("socialSignIn");
+    return this.afAuth.auth
+      .signInWithPopup(provider)
+      .then(credential => {
+        this.user = credential.user;
+        // this.updateUserData()
+      })
+      .catch(error => console.log(error));
   }
 }
